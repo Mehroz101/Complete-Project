@@ -3,6 +3,7 @@ const fs = require("fs");
 const path = require("path");
 const review = require("../models/Review");
 const emitReservationMessage = require("../utils/emitReservationMessage");
+const Setting = require("../models/Settings");
 // const io = require("socket.io"); // Attach to your server
 // Get the Socket.io instance from the app
 // Create a new space
@@ -406,16 +407,32 @@ const IsFavoriteByAdmin = async (req, res) => {
     }
 
     // Toggle the isFavorite value
+    const isFavorite = !existingReview.isFavorite;
     const updatedReview = await review.findByIdAndUpdate(
       reviewId,
-      { isFavorite: !existingReview.isFavorite },
+      { isFavorite },
       { new: true } // Return the updated document
     );
+
+    // Update the settings model
+    const settings = await Setting.findOne({});
+    if (isFavorite) {
+      // Add the review ID to reviewsToShow if not already present
+      if (!settings.reviewsToShow.includes(reviewId)) {
+        settings.reviewsToShow.push(reviewId);
+      }
+    } else {
+      // Remove the review ID from reviewsToShow if it exists
+      settings.reviewsToShow = settings.reviewsToShow.filter(
+        (id) => id.toString() !== reviewId
+      );
+    }
+    await settings.save();
 
     res.status(200).json({
       success: true,
       message: "Review updated successfully",
-      updatedReview, // Optionally return the updated review
+      updatedReview,
     });
   } catch (error) {
     console.error("Error updating review:", error.message);
