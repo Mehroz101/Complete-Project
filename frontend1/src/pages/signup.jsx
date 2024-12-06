@@ -19,10 +19,7 @@ const Signup = () => {
   const navigate = useNavigate();
   const signupMutation = useMutation({
     mutationFn: signupAdmin,
-    onSuccess: (data) => {
-      navigate("/login");
-      notify("success", "login successfully");
-    },
+    onSuccess: (data) => {},
     onError: (error) => {
       notify("error", error);
       console.error("Error adding user:", error.message);

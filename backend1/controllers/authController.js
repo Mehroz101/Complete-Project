@@ -39,8 +39,6 @@ const signup = async (req, res) => {
     });
   }
 };
-
-// Login function
 const login = async (req, res) => {
   const { email, password } = req.body;
 
@@ -76,7 +74,6 @@ const login = async (req, res) => {
     });
   }
 };
-
 const forget = async (req, res) => {
   const { email } = req.body;
   try {
@@ -188,8 +185,7 @@ const AdminLogin = async (req, res) => {
   }
 };
 const AdminSignup = async (req, res) => {
-  const { email, password, confirmPassword } = req.body;
-
+  const { username, password, confirmPassword } = req.body;
   try {
     if (password !== confirmPassword) {
       return res.status(422).json({
@@ -197,25 +193,23 @@ const AdminSignup = async (req, res) => {
         message: "Passwords do not match",
       });
     }
-
-    const isUserExist = await Admin.findOne({ email });
-    if (isUserExist) {
+    const existingAdmin = await Admin.findOne({ username });
+    if (existingAdmin) {
       return res.status(409).json({
         success: false,
         message: "Admin already exists",
       });
     }
-    const hashPassowrd = await bcryptjs.hash(password, 10);
-
-    const newUser = new User({ email, password: hashPassowrd });
-    const userCreated = await newUser.save();
-
+    const hashedPassword = await bcryptjs.hash(password, 10);
+    const newAdmin = new Admin({ username, password: hashedPassword });
+    const createdAdmin = await newAdmin.save();
     res.status(201).json({
       success: true,
       message: "Admin registered successfully!",
-      user: userCreated,
+      user: createdAdmin,
     });
   } catch (error) {
+    console.error(`Error in adminSignup function - ${error.message}`);
     res.status(500).json({
       success: false,
       message: "Internal Server Error",
