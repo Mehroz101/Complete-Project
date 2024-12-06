@@ -297,7 +297,63 @@
   padding: 2rem;
   color: var(--text-white); /* Ensure text stands out on the new background */
 }
+.testimonials .card {
+  display: flex;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  max-width: 600px;
+  width: 100%;
+}
 
+/* Image section */
+.testimonials .card-image img {
+  width: 150px;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Content section */
+.testimonials .card-content {
+  padding: 20px;
+  flex: 1;
+}
+
+.testimonials .card-title {
+  margin: 0;
+  font-size: 1.2em;
+  font-weight: bold;
+  color: #4a90e2;
+}
+
+.testimonials .card-subtitle {
+  margin: 5px 0;
+  font-size: 0.9em;
+  color: #1eb06c;
+  text-transform: capitalize;
+}
+
+.testimonials .card-description {
+  font-size: 0.9em;
+  color: #495057;
+  margin: 10px 0 20px;
+}
+
+.testimonials .card-button {
+  padding: 10px 20px;
+  font-size: 0.9em;
+  color: white;
+  background-color: #4a90e2;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.testimonials .card-button:hover {
+  background-color: #357ab8;
+}
 .testimonials .section-header {
   margin-bottom: 2rem;
 }
@@ -322,43 +378,30 @@
 .testimonials-container {
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
   gap: 1.5rem;
 }
 
-/* Style for each testimonial */
-.testimonial {
-  background-color: var(--text-white); /* Box background color */
-  border-radius: 8px;
-  padding: 1.5rem;
-  max-width: 600px;
-  margin-left: auto;
-  margin-right: auto;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+.star-rating {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  font-size: 20px;
+  color: #ccc; /* Default empty star color */
 }
 
-
-/* Testimonial content */
-.testimonial-content {
-  text-align: left;
+.star-rating i {
+  margin-right: 5px;
 }
 
-/* Testimonial text */
-.testimonial-content p {
-  font-size: 1rem;
-  color: var(--text);
-  margin-bottom: 1rem;
-  line-height: 1.5;
+.star-rating .fas {
+  color: #1eb06c; /* Filled star color (yellow) */
 }
 
-/* Author name */
-.testimonial-content h4 {
-  font-size: 1.1rem;
-  color: var(--primary); /* Primary color for the author’s name */
-  margin: 0;
+.star-rating .far {
+  color: #ccc; /* Empty star color */
 }
+
 
 /* Rating stars */
 .rating {

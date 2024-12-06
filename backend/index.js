@@ -7,6 +7,7 @@ const adminRoutes = require("./routes/adminRoutes");
 const reservationRoutes = require("./routes/reservationRoutes");
 const paymentRoutes = require("./routes/paymentRoutes");
 const reviewRoutes = require("./routes/reviewRoutes");
+const siteRoutes = require("./routes/siteRoutes");
 const {
   connectDB,
   checkDatabaseConnection,
@@ -131,6 +132,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/user", userRoutes);
 app.use("/api/reviews", reviewRoutes);
 app.use("/api/admin", adminRoutes);
+app.use("/api/site", siteRoutes);
 // const HOST = '0.0.0.0'; // Change this from 'localhost' to '0.0.0.0'
 app.use(express.static(path.join(__dirname, "../frontend/dist")));
 app.get("*", (req, res) => {

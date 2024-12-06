@@ -11,7 +11,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@tanstack/react-query": "^5.53.1",
+    "@tanstack/react-query": "^5.62.2",
     "axios": "^1.7.3",
     "braintree-web-drop-in-react": "^1.2.1",
     "braintree-web-drop-in-react-updated": "^1.0.3",

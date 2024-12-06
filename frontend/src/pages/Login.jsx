@@ -2,9 +2,11 @@ import React, { useState } from "react";
 import "../styles/Login.css";
 import { Link, useNavigate } from "react-router-dom";
 import { useSigninForm } from "../services/useSigninForm";
+import { useSetting } from "../context/WebsiteSetting";
 const Login = () => {
   const { userDetail, handleChange, handleSubmit } = useSigninForm();
   const navigate = useNavigate();
+  const { siteSetting } = useSetting();
 
   const goBack = () => {
     navigate(-1); // This will navigate to the previous page
@@ -21,12 +23,13 @@ const Login = () => {
         <div className="login_container">
           <div className="login_left">
             <div className="login_logo">
-              <Link to="/">Parkify</Link>
+              <Link to="/">{siteSetting?.siteName}</Link>
             </div>
             <div className="login_details">
               <form onSubmit={handleSubmit} method="post">
                 <h1>
-                  Login to <span className="brand_name">Parkify</span>
+                  Login to{" "}
+                  <span className="brand_name">{siteSetting?.siteName}</span>
                 </h1>
                 {/* <button className="google_btn">
                   <i className="fa-brands fa-google"></i>

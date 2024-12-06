@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import "../styles/Navbar.css";
 import { useAuth } from "../context/AuthContext";
-const Navbar = () => {
+const Navbar = ({ siteName }) => {
   const [navbar, setNavbar] = useState(false);
   const [profileNav, setProfileNav] = useState(false);
   const [email, setEmail] = useState("");
@@ -46,7 +46,7 @@ const Navbar = () => {
       <div className="nav_items">
         <div className="nav_left">
           <h1>
-            <Link to="/">Parkify</Link>
+            <Link to="/">{siteName}</Link>
           </h1>
         </div>
         <div className={navbar ? `nav_right nav_show` : `nav_right`}>

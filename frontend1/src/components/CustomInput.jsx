@@ -1,4 +1,3 @@
-// CustomInput.js
 import React from "react";
 import { useController } from "react-hook-form";
 
@@ -9,6 +8,7 @@ const CustomInput = ({
   type = "text",
   placeholder,
   required = false,
+  defaultValue = "", // Add defaultValue prop
 }) => {
   const {
     field: { onChange, onBlur, value, ref },
@@ -16,8 +16,9 @@ const CustomInput = ({
   } = useController({
     name,
     control,
+    defaultValue, // Set defaultValue here
     rules: {
-      required: required ? `${label} is required` : false, // Show error message if required
+      required: required ? `${label} is required` : false,
     },
   });
 

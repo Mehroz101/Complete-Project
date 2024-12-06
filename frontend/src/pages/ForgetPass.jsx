@@ -3,8 +3,10 @@ import "../styles/Login.css";
 import { Link, useNavigate } from "react-router-dom";
 import { useForgetForm } from "../services/useForgetForm";
 import { notifyPromise } from "../services/errorHandlerService";
+import { useSetting } from "../context/WebsiteSetting";
 const ForgetPass = () => {
   const navigate = useNavigate();
+  const { siteSetting } = useSetting();
 
   const { handleSubmit, handleChange, userDetail } = useForgetForm();
   const goBack = () => {
@@ -20,9 +22,8 @@ const ForgetPass = () => {
       success: "Check your email!",
       error: "Failed to send mail!",
     });
-   
   };
- 
+
   return (
     <>
       <div className="login_page forgetpass_page">
@@ -34,33 +35,32 @@ const ForgetPass = () => {
         <div className="login_container">
           <div className="login_left">
             <div className="login_logo">
-              <Link to="/">Parkify</Link>
+              <Link to="/">{siteSetting?.siteName}</Link>
             </div>
             <div className="login_details">
-            
-                  <form onSubmit={handleFormSubmit}>
-                    <h1>
-                      Forget <span className="brand_name">Password</span>
-                    </h1>
+              <form onSubmit={handleFormSubmit}>
+                <h1>
+                  Forget <span className="brand_name">Password</span>
+                </h1>
 
-                    <p className="short_text">Enter email to forget password</p>
-                    <div className="email_box box">
-                      <label htmlFor="email">Email</label>
-                      <div className="field">
-                        <i className="fa-solid fa-envelope"></i>
-                        <input
-                          type="email"
-                          onChange={handleChange}
-                          value={userDetail.email}
-                          name="email"
-                          placeholder="Email"
-                        />
-                      </div>
-                    </div>
+                <p className="short_text">Enter email to forget password</p>
+                <div className="email_box box">
+                  <label htmlFor="email">Email</label>
+                  <div className="field">
+                    <i className="fa-solid fa-envelope"></i>
+                    <input
+                      type="email"
+                      onChange={handleChange}
+                      value={userDetail.email}
+                      name="email"
+                      placeholder="Email"
+                    />
+                  </div>
+                </div>
 
-                    <button className="login_btn">Forget Password</button>
-                  </form>
-              
+                <button className="login_btn">Forget Password</button>
+              </form>
+
               <div className="dont_account">
                 <p>
                   Do you have an account

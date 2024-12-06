@@ -399,3 +399,12 @@ export const siteNameUpdate = async (data) => {
     notify("error", error.response.data.message);
   }
 };
+export const getSiteName = async () => {
+  try {
+    const response = await axios.get(`${API_URL}/api/site/getsitsetting`);
+    console.log(response.data.data.siteName);
+    return response.data.data.siteName;
+  } catch (error) {
+    console.log(error);
+  }
+};

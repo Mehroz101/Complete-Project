@@ -7,13 +7,14 @@ import Partner1 from "../assets/partner-1.png";
 import Partner2 from "../assets/partner-2.png";
 import Partner3 from "../assets/partner-3.png";
 import Partner4 from "../assets/partner-4.png";
+import { useSetting } from "../context/WebsiteSetting";
 // import { getAllReviews, getSpaceReviews } from "../services/spaceService";
 // import { reviewDateCalculator } from "../parkingOwner/components/Functions";
 const Home = () => {
   const [activeIndex, setActiveIndex] = useState(null);
   const [height, setHeight] = useState("0px");
   const contentRef = useRef(null);
-
+  const { siteSetting } = useSetting();
   const [text, setText] = useState("");
   const [isDeleting, setIsDeleting] = useState(false);
   const [wordIndex, setWordIndex] = useState(0);
@@ -92,7 +93,7 @@ const Home = () => {
 
   return (
     <>
-      <Navbar />
+      <Navbar siteName={siteSetting?.siteName} />
       <div className="hero_section">
         <div className="hero_left">
           <ParkingFinderCard />
@@ -239,54 +240,36 @@ const Home = () => {
           </div>
         )} */}
         <div className="testimonials-container">
-          <div className="testimonial">
-            <div className="testimonial-content">
-              <p>
-                "This service has completely changed the way I park. It's so
-                convenient to reserve a spot ahead of time!"
-              </p>
-              <h4>- Alex J.</h4>
-              <div className="rating">
-                <span>&#9733;</span>
-                <span>&#9733;</span>
-                <span>&#9733;</span>
-                <span>&#9733;</span>
-                <span>&#9734;</span>
-              </div>
-            </div>
-          </div>
-          <div className="testimonial">
-            <div className="testimonial-content">
-              <p>
-                "Listing my parking space has been a great way to earn some
-                extra income. Highly recommend!"
-              </p>
-              <h4>- Maria S.</h4>
-              <div className="rating">
-                <span>&#9733;</span>
-                <span>&#9733;</span>
-                <span>&#9733;</span>
-                <span>&#9733;</span>
-                <span>&#9733;</span>
-              </div>
-            </div>
-          </div>
-          <div className="testimonial">
-            <div className="testimonial-content">
-              <p>
-                "Finding a parking spot is no longer a hassle. The app is easy
-                to use and very reliable."
-              </p>
-              <h4>- John D.</h4>
-              <div className="rating">
-                <span>&#9733;</span>
-                <span>&#9733;</span>
-                <span>&#9733;</span>
-                <span>&#9733;</span>
-                <span>&#9734;</span>
-              </div>
-            </div>
-          </div>
+          {siteSetting?.reviewsToShow?.length > 0 &&
+            siteSetting?.reviewsToShow.map((review, index) => {
+              return (
+                <div class="card">
+                  <div class="card-image">
+                    <img
+                      src={`http://localhost:5000/${review?.spaceId?.images[0]}`}
+                      alt="Profile picture"
+                    />
+                  </div>
+                  <div class="card-content">
+                    <h3 class="card-title">
+                      {review?.userId?.fName} {review?.userId?.lName}
+                    </h3>
+                    <p class="card-subtitle">{review?.spaceId?.title}</p>
+                    <p class="card-description">{review?.reviewMsg}</p>
+                    <div className="star-rating">
+                      {Array.from({ length: 5 }, (_, index) => (
+                        <i
+                          key={index}
+                          className={`fa${
+                            index < review?.rating ? "s" : "r"
+                          } fa-star`}
+                        ></i>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
         </div>
       </section>
 
@@ -390,7 +373,7 @@ const Home = () => {
         </div>
       </section> */}
 
-      <Footer />
+      <Footer siteName={siteSetting?.siteName} />
     </>
   );
 };

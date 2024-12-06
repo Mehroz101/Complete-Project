@@ -1,10 +1,14 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import CustomInput from "../components/CustomInput";
 import { useAuth } from "../context/AuthContext";
 import { notify } from "../utils/notification";
-import { changePassword, siteNameUpdate } from "../services/apiService";
-import { useMutation } from "@tanstack/react-query";
+import {
+  changePassword,
+  getSiteName,
+  siteNameUpdate,
+} from "../services/apiService";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { Button } from "primereact/button";
 const Setting = () => {
   // Default values for the password reset form
@@ -14,7 +18,11 @@ const Setting = () => {
     handleSubmit: handlePasswordSubmit,
     formState: { errors: passwordErrors },
   } = useForm();
-  const { control: controlSite, handleSubmit: handleSiteSubmit } = useForm({
+  const {
+    control: controlSite,
+    handleSubmit: handleSiteSubmit,
+    setValue,
+  } = useForm({
     defaultValues: {
       sitename: "",
     },
@@ -48,7 +56,15 @@ const Setting = () => {
   const onSiteSubmit = (data) => {
     siteNameMutation.mutate(data);
   };
-
+  const { data: siteName } = useQuery({
+    queryKey: ["sitename"],
+    queryFn: getSiteName,
+  });
+  useEffect(() => {
+    if (siteName) {
+      setValue("sitename", siteName);
+    }
+  }, [siteName, controlSite]);
   return (
     <>
       <div className="setting_page flex">
@@ -124,6 +140,7 @@ const Setting = () => {
                   type="text"
                   placeholder="Enter your site name"
                   required={true}
+                  defaultValue={siteName} // Provide the default value here
                 />
                 <Button
                   type="submit"

@@ -39,5 +39,42 @@ const siteNameUpdateByAdmin = async (req, res) => {
     });
   }
 };
+const getSiteSetting = async (req, res) => {
+  try {
+    const site = await Setting.findOne({}); // Assuming there's only one settings document
+    if (site) {
+      res.status(200).json({ success: true, data: site }); // Return the site name
+    } else {
+      res
+        .status(404)
+        .json({ success: false, message: "Settings document not found" }); // Handle the case where the document is not found
+    }
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).json({ success: false, message: "Server error" }); // Handle server errors
+  }
+};
+const getSiteSettings = async (req, res) => {
+  try {
+    const site = await Setting.findOne({}).populate({
+      path: "reviewsToShow", // Path to populate
+      populate: [
+        { path: "spaceId", model: "Space" }, // Populate spaceId field
+        { path: "userId", model: "User" }, // Populate userId field
+      ],
+    });
 
-module.exports = { siteNameUpdateByAdmin };
+    if (site) {
+      res.status(200).json({ success: true, data: site });
+    } else {
+      res
+        .status(404)
+        .json({ success: false, message: "Settings document not found" });
+    }
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).json({ success: false, message: "Server error" });
+  }
+};
+
+module.exports = { siteNameUpdateByAdmin, getSiteSetting, getSiteSettings };

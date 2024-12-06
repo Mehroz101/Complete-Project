@@ -1,13 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "../styles/Footer.css";
-const Footer = () => {
+const Footer = ({ siteName }) => {
   return (
     <>
       <footer className="footer">
         <div className="footer-container">
           <div className="footer-logo">
-            <h1>Parkify</h1>
+            <h1>{siteName}</h1>
             <p>Your smart solution for parking.</p>
           </div>
           <div className="footer-links">
@@ -30,7 +30,9 @@ const Footer = () => {
               <h3>Contact Us</h3>
               <ul>
                 <li>
-                  <Link to="" mailTo>info@example.com</Link>
+                  <Link to="" mailTo>
+                    info@example.com
+                  </Link>
                 </li>
                 <li>
                   <Link to="123456789">+123 456 789</Link>

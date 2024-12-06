@@ -3,9 +3,11 @@ import "../styles/Login.css";
 import { Link, useNavigate } from "react-router-dom";
 import { useSignupForm } from "../services/useSignupForm";
 import { notifyPromise } from "../services/errorHandlerService";
+import { useSetting } from "../context/WebsiteSetting";
 
 const Signup = () => {
   const { userDetail, handleChange, handleSubmit } = useSignupForm();
+  const { siteSetting } = useSetting();
 
   // const handleFormSubmit = async (e) => {
   //   e.preventDefault();
@@ -35,7 +37,7 @@ const Signup = () => {
         <div className="login_container">
           <div className="login_left">
             <div className="login_logo">
-              <Link to="/">Parkify</Link>
+              <Link to="/">{siteSetting?.siteName}</Link>
             </div>
             <div className="login_details">
               <form onSubmit={handleSubmit}>
