@@ -31,28 +31,28 @@ const Footer = ({ siteName }) => {
               <ul>
                 <li>
                   <Link to="" mailTo>
-                    info@example.com
+                    mehrozfarooq127@gmail.com
                   </Link>
                 </li>
                 <li>
-                  <Link to="123456789">+123 456 789</Link>
+                  <Link to="123456789">+92 123 456 789</Link>
                 </li>
-                <li>123 Main Street, City</li>
+                <li>Chnugi No. 06, Gulgusht Colony, Lahore</li>
               </ul>
             </div>
             <div className="footer-section">
               <h3>Follow Us</h3>
               <div className="social-media">
-                <Link to="">
+                <Link to="https://www.facebook.com/mehroz.farooq.7/">
                   <i className="fab fa-facebook-f"></i>
                 </Link>
-                <Link to="">
-                  <i className="fab fa-twitter"></i>
+                <Link to="https://github.com/Mehroz101/">
+                  <i className="fab fa-github"></i>
                 </Link>
-                <Link to="">
+                <Link to="https://www.instagram.com/mehrozfarooq/">
                   <i className="fab fa-instagram"></i>
                 </Link>
-                <Link to="">
+                <Link to="https://www.linkedin.com/in/mehroz-farooq-0ba92b223/">
                   <i className="fab fa-linkedin-in"></i>
                 </Link>
               </div>
