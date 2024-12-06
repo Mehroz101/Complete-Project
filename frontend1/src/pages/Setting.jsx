@@ -3,8 +3,9 @@ import { useForm } from "react-hook-form";
 import CustomInput from "../components/CustomInput";
 import { useAuth } from "../context/AuthContext";
 import { notify } from "../utils/notification";
-import { changePassword } from "../services/apiService";
+import { changePassword, siteNameUpdate } from "../services/apiService";
 import { useMutation } from "@tanstack/react-query";
+import { Button } from "primereact/button";
 const Setting = () => {
   // Default values for the password reset form
   const { logout } = useAuth();
@@ -13,6 +14,11 @@ const Setting = () => {
     handleSubmit: handlePasswordSubmit,
     formState: { errors: passwordErrors },
   } = useForm();
+  const { control: controlSite, handleSubmit: handleSiteSubmit } = useForm({
+    defaultValues: {
+      sitename: "",
+    },
+  });
 
   const passwordMutation = useMutation({
     mutationFn: (data) => {
@@ -27,13 +33,25 @@ const Setting = () => {
       console.error("Error adding user:", error.message);
     },
   });
+  const siteNameMutation = useMutation({
+    mutationFn: siteNameUpdate,
+    onSuccess: (data) => {
+      notify("success", data.message);
+    },
+    onError: (error) => {
+      notify("error", error.message);
+    },
+  });
   const onPasswordSubmit = (data) => {
     passwordMutation.mutate(data);
+  };
+  const onSiteSubmit = (data) => {
+    siteNameMutation.mutate(data);
   };
 
   return (
     <>
-      <div className="setting_page mt-4 flex justify-content-center p-4">
+      <div className="setting_page flex">
         <div className="settings">
           {/* <div className="profile flex align-items-center justify-content-center gap-6 ">
             <div className="profile_pic overflow-hidden border-round-lg">
@@ -95,8 +113,31 @@ const Setting = () => {
           </div> */}
 
           {/* Password Reset Form */}
-          <div className="form mt-4 shadow-3 bg-white p-4">
-            <h2 className="text-lg font-semibold">Setting</h2>
+          <div className="sitename">
+            <h1>Setting</h1>
+            <div className="sitename_form">
+              <form onSubmit={handleSiteSubmit(onSiteSubmit)}>
+                <CustomInput
+                  label="Site Name"
+                  name="sitename"
+                  control={controlSite}
+                  type="text"
+                  placeholder="Enter your site name"
+                  required={true}
+                />
+                <Button
+                  type="submit"
+                  label="Update"
+                  style={{
+                    marginBottom: "18px",
+                    padding: "13px 10px",
+                  }}
+                />
+              </form>
+            </div>
+          </div>
+          <div className="password_form mt-4 p-4">
+            <h2 className="text-lg font-semibold">Change Password</h2>
             <form onSubmit={handlePasswordSubmit(onPasswordSubmit)}>
               <CustomInput
                 label="Username"

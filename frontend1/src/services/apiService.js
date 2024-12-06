@@ -378,3 +378,24 @@ export const isFavoriteReview = async (reviewId) => {
     notify("error", error.response.data.message);
   }
 };
+
+export const siteNameUpdate = async (data) => {
+  try {
+    console.log(data);
+    const token = localStorage.getItem("admintoken"); // Retrieve the token from localStorage
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`, // Add the token to the Authorization header
+      },
+    };
+    console.log(data);
+    const response = await axios.post(
+      `${API_URL}/api/admin/sitename`,
+      data,
+      config
+    );
+    return response.data;
+  } catch (error) {
+    notify("error", error.response.data.message);
+  }
+};

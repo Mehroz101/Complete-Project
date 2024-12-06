@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const settingsSchema = new mongoose.Schema({
-  siteName: { type: String, required: true, default: "Smart Parking" },
+  siteName: { type: String, required: true, default: "ParkNow" },
   reviewsToShow: [{ type: mongoose.Schema.Types.ObjectId, ref: "Review" }],
 });
 

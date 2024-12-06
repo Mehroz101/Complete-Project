@@ -149,3 +149,35 @@
 .isFavorite_true{
   background-color: rgba(193, 236, 247, 0.788);
 }
+.password_form{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 100px auto;
+  width: 100vw;
+}
+.password_form form{
+  padding: 20px;
+  box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.2);
+
+}
+.sitename_form{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 50px auto;
+  width: 100vw;
+  /* box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.2); */
+}
+.sitename_form form{
+  padding: 10px;
+  display: flex;
+  margin: 0 auto;
+  gap: 20px;
+  align-items: flex-end;
+}
+#sitename{
+  width: 40vw;
+}
