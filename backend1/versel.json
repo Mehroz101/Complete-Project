@@ -1,0 +1,15 @@
+{
+    "version":2,
+    "bulids":[
+        {
+            "src": "*js",
+            "use":"@versel/node"
+        }
+    ],
+    "routes":[
+        {
+            "src":"/(.*)",
+            "dest":"/"
+        }
+    ]
+}

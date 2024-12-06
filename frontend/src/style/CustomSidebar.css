@@ -1,0 +1,32 @@
+/* src/components/CustomSidebar.css */
+.sidebar-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .sidebar-profile-name {
+    margin: 10px 0 0 0;
+  }
+  
+  .sidebar-links {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .sidebar-link {
+    display: flex;
+    align-items: center;
+    padding: 10px 20px;
+    text-decoration: none;
+    color: #333;
+  }
+  
+  .sidebar-link:hover {
+    background-color: #f0f0f0;
+  }
+  
+  .sidebar-link i {
+    margin-right: 10px;
+  }

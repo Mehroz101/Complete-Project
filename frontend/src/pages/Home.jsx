@@ -3,56 +3,67 @@ import Navbar from "../components/Navbar";
 import ParkingFinderCard from "../components/ParkingFinderCard";
 import userImg from "../assets/parkingZone.png";
 import Footer from "../components/Footer";
-import Partner1 from "../assets/partner-1.png"
-import Partner2 from "../assets/partner-2.png"
-import Partner3 from "../assets/partner-3.png"
-import Partner4 from "../assets/partner-4.png"
+import Partner1 from "../assets/partner-1.png";
+import Partner2 from "../assets/partner-2.png";
+import Partner3 from "../assets/partner-3.png";
+import Partner4 from "../assets/partner-4.png";
+// import { getAllReviews, getSpaceReviews } from "../services/spaceService";
+// import { reviewDateCalculator } from "../parkingOwner/components/Functions";
 const Home = () => {
   const [activeIndex, setActiveIndex] = useState(null);
-  const [height, setHeight] = useState('0px');
+  const [height, setHeight] = useState("0px");
   const contentRef = useRef(null);
 
-  const [text, setText] = useState('');
+  const [text, setText] = useState("");
   const [isDeleting, setIsDeleting] = useState(false);
   const [wordIndex, setWordIndex] = useState(0);
   const [charIndex, setCharIndex] = useState(0);
-  const words = ["Anywhere","Anytime","Effortlessly","Smartly"];
+  // const [reviews, setReviews] = useState([]);
+  const words = ["Anywhere", "Anytime", "Effortlessly", "Smartly"];
   const speed = 150; // Typing speed in milliseconds
-
- 
 
   const faqs = [
     {
-      question: 'How do I reserve a parking spot?',
-      answer: 'To reserve a parking spot, simply search for available spots in your area, select your desired time, and complete the payment. You\'ll receive a confirmation and instructions on how to access your reserved spot.'
+      question: "How do I reserve a parking spot?",
+      answer:
+        "To reserve a parking spot, simply search for available spots in your area, select your desired time, and complete the payment. You'll receive a confirmation and instructions on how to access your reserved spot.",
     },
     {
-      question: 'How can I list my parking space for rent?',
-      answer: 'Listing your parking space is easy. Go to the "List Your Space" page, provide details about your spot, set your price, and publish your listing. Our platform will handle the rest!'
+      question: "How can I list my parking space for rent?",
+      answer:
+        'Listing your parking space is easy. Go to the "List Your Space" page, provide details about your spot, set your price, and publish your listing. Our platform will handle the rest!',
     },
     {
-      question: 'What if I need to cancel my reservation?',
-      answer: 'If you need to cancel, you can do so through your account dashboard. Depending on the cancellation policy of the spot owner, you may be eligible for a refund.'
+      question: "What if I need to cancel my reservation?",
+      answer:
+        "If you need to cancel, you can do so through your account dashboard. Depending on the cancellation policy of the spot owner, you may be eligible for a refund.",
     },
     {
-      question: 'Is my payment information secure?',
-      answer: 'Yes, we use industry-standard encryption to ensure that your payment information is secure. Your data is protected with the highest levels of security.'
-    }
+      question: "Is my payment information secure?",
+      answer:
+        "Yes, we use industry-standard encryption to ensure that your payment information is secure. Your data is protected with the highest levels of security.",
+    },
   ];
 
-  const handleClick = index => {
+  const handleClick = (index) => {
     if (activeIndex === index) {
-      setHeight('0px');
+      setHeight("0px");
       setActiveIndex(null);
     } else {
       setActiveIndex(index);
       setHeight(`${contentRef.current.scrollHeight}px`);
     }
   };
-
+  // const getReviews = async () => {
+  //   const response = await getAllReviews();
+  //   setReviews(response);
+  // };
+  // useEffect(() => {
+  //   getReviews();
+  // }, []);
   useEffect(() => {
     if (activeIndex === null) {
-      setHeight('0px');
+      setHeight("0px");
     }
   }, [activeIndex]);
   useEffect(() => {
@@ -89,52 +100,77 @@ const Home = () => {
         <div className="hero_right">
           <div className="here_right_text">
             {/* //  <h1>Smart <span>Parking</span> Smart <span>Solution</span></h1>  */}
-            <h1>Find Your Perfect Parking Spot <span> {text}</span></h1>
+            <h1>
+              Find Your Perfect Parking Spot <span> {text}</span>
+            </h1>
             <p>
-              Discover the convenience of finding and reserving parking spaces in advance. Whether you're heading to work, shopping, or an event, our smart parking solution makes it easy to secure a spot with just a few clicks.
+              Discover the convenience of finding and reserving parking spaces
+              in advance. Whether you're heading to work, shopping, or an event,
+              our smart parking solution makes it easy to secure a spot with
+              just a few clicks.
             </p>
           </div>
         </div>
       </div>
       <div className="howtobook_container">
         <h2>How It Works?</h2>
-        <p className="sporttext">Effortlessly explore, choose, and reserve your ideal parking spot in just a few clicks.</p>
+        <p className="sporttext">
+          Effortlessly explore, choose, and reserve your ideal parking spot in
+          just a few clicks.
+        </p>
         <div className="stepboxs">
-
           <div className="step_box">
             <div className="number">
               <span>1</span>
             </div>
             <h3>Explore Nearby Parking</h3>
-            <p>Open our platform and instantly view available parking spots in your desired location. Use the map or search function to explore nearby options and filter by price, distance, or amenities.</p>
+            <p>
+              Open our platform and instantly view available parking spots in
+              your desired location. Use the map or search function to explore
+              nearby options and filter by price, distance, or amenities.
+            </p>
           </div>
           <div className="step_box">
             <div className="number">
               <span>2</span>
             </div>
             <h3>Choose Your Spot</h3>
-            <p>Browse through available spots, check real-time availability, and view detailed information including photos and user reviews. Select the perfect spot that fits your needs.</p>
+            <p>
+              Browse through available spots, check real-time availability, and
+              view detailed information including photos and user reviews.
+              Select the perfect spot that fits your needs.
+            </p>
           </div>
           <div className="step_box">
             <div className="number">
               <span>3</span>
             </div>
             <h3>Reserve & Pay</h3>
-            <p>Once you’ve found the ideal spot, reserve it with a click. Complete your payment securely, and receive instant confirmation with all the details you need.</p>
+            <p>
+              Once you’ve found the ideal spot, reserve it with a click.
+              Complete your payment securely, and receive instant confirmation
+              with all the details you need.
+            </p>
           </div>
         </div>
       </div>
       <section className="features">
         <div className="section-header">
           <h2>Why Choose Us</h2>
-          <p>Explore the advantages of our smart parking solution and how it enhances your parking experience.</p>
-        </div> <div className="feature_boxs">  <div className="feature-box">
-          <div className="icon">
-            <i className="fas fa-search"></i>
+          <p>
+            Explore the advantages of our smart parking solution and how it
+            enhances your parking experience.
+          </p>
+        </div>{" "}
+        <div className="feature_boxs">
+          {" "}
+          <div className="feature-box">
+            <div className="icon">
+              <i className="fas fa-search"></i>
+            </div>
+            <h3>Real-Time Availability</h3>
+            <p>Get up-to-date information on available parking spots.</p>
           </div>
-          <h3>Real-Time Availability</h3>
-          <p>Get up-to-date information on available parking spots.</p>
-        </div>
           <div className="feature-box">
             <div className="icon">
               <i className="fas fa-lock"></i>
@@ -165,20 +201,50 @@ const Home = () => {
         <div className="feature-content">
           <p className="supporting-line">Discover Our Key Feature</p>
           <h2>Unlock the Best Parking Experience</h2>
-          <p>Our innovative system makes parking and renting spaces more convenient than ever. Sign up to experience seamless parking management and discover new opportunities to list your space.</p>
-          <a href="#signup" className="cta-button">Get Started</a>
+          <p>
+            Our innovative system makes parking and renting spaces more
+            convenient than ever. Sign up to experience seamless parking
+            management and discover new opportunities to list your space.
+          </p>
+          <a href="#signup" className="cta-button">
+            Get Started
+          </a>
         </div>
       </section>
       <section className="testimonials">
         <div className="section-header">
           <h2>What Our Users Say</h2>
-          <p>Hear from satisfied users who have transformed how they park and rent out their spaces.</p>
+          <p>
+            Hear from satisfied users who have transformed how they park and
+            rent out their spaces.
+          </p>
         </div>
+        {/* {reviews?.length > 0 && (
+          <div className="reservation_detail_right_reviews">
+            {reviews?.map((review, index) => {
+              return (
+                <>
+                  <div className="review-item" key={index}>
+                    <h4>{review?.userId?.fName}</h4>
+                    <div className="review-meta">
+                      <span>{review?.rating}</span>
+                      <i className="fa-solid fa-star"></i>
+                      <span>{reviewDateCalculator(review)}</span>
+                    </div>
+                    <p>"{review?.reviewMsg}"</p>
+                  </div>
+                </>
+              );
+            })}
+          </div>
+        )} */}
         <div className="testimonials-container">
           <div className="testimonial">
-            
             <div className="testimonial-content">
-              <p>"This service has completely changed the way I park. It's so convenient to reserve a spot ahead of time!"</p>
+              <p>
+                "This service has completely changed the way I park. It's so
+                convenient to reserve a spot ahead of time!"
+              </p>
               <h4>- Alex J.</h4>
               <div className="rating">
                 <span>&#9733;</span>
@@ -190,9 +256,11 @@ const Home = () => {
             </div>
           </div>
           <div className="testimonial">
-            
             <div className="testimonial-content">
-              <p>"Listing my parking space has been a great way to earn some extra income. Highly recommend!"</p>
+              <p>
+                "Listing my parking space has been a great way to earn some
+                extra income. Highly recommend!"
+              </p>
               <h4>- Maria S.</h4>
               <div className="rating">
                 <span>&#9733;</span>
@@ -204,9 +272,11 @@ const Home = () => {
             </div>
           </div>
           <div className="testimonial">
-            
             <div className="testimonial-content">
-              <p>"Finding a parking spot is no longer a hassle. The app is easy to use and very reliable."</p>
+              <p>
+                "Finding a parking spot is no longer a hassle. The app is easy
+                to use and very reliable."
+              </p>
               <h4>- John D.</h4>
               <div className="rating">
                 <span>&#9733;</span>
@@ -223,16 +293,23 @@ const Home = () => {
       <section className="call-to-action">
         <div className="cta-content">
           <h2>Get Started Today</h2>
-          <p>Sign up now to find your perfect parking spot or list your space for rent. Experience the future of parking with our smart solution.</p>
-          <a href="#signup" className="cta-button">Sign Up Now</a>
+          <p>
+            Sign up now to find your perfect parking spot or list your space for
+            rent. Experience the future of parking with our smart solution.
+          </p>
+          <a href="#signup" className="cta-button">
+            Sign Up Now
+          </a>
         </div>
       </section>
 
-      
       <section className="faqs">
         <div className="section-header">
           <h2>Frequently Asked Questions</h2>
-          <p>Find answers to the most common questions about our parking and renting solutions.</p>
+          <p>
+            Find answers to the most common questions about our parking and
+            renting solutions.
+          </p>
         </div>
         <div className="faq-list">
           {faqs.map((faq, index) => (
@@ -242,7 +319,7 @@ const Home = () => {
               </div>
               <div
                 className="faq-answer"
-                style={{ height: activeIndex === index ? height : '0px' }}
+                style={{ height: activeIndex === index ? height : "0px" }}
                 ref={activeIndex === index ? contentRef : null}
               >
                 <p>{faq.answer}</p>
@@ -254,7 +331,10 @@ const Home = () => {
       <section className="partners">
         <div className="section-header">
           <h2>Our Partners</h2>
-          <p>We collaborate with industry leaders to bring you the best parking solutions.</p>
+          <p>
+            We collaborate with industry leaders to bring you the best parking
+            solutions.
+          </p>
         </div>
         <div className="partners-scroll">
           <div className="partners-list">
@@ -310,7 +390,7 @@ const Home = () => {
         </div>
       </section> */}
 
-      <Footer/>
+      <Footer />
     </>
   );
 };

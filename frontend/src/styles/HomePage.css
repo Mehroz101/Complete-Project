@@ -409,12 +409,14 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-color: var(--background); /* Background color for the section */
+  background-color: #f9f9f9; /* Background color for the section */
   padding: 2rem;
   gap: 2rem; /* Space between image and content */
+  overflow: hidden;
 }
 .feature-image{
-  max-height: 500px;
+  max-height: 600px;
+  transform: translateY(-100px);
 }
 @keyframes bounce {
   0%, 20%, 50%, 80%, 100% {
