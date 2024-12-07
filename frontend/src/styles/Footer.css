@@ -1,26 +1,41 @@
 /* Style for the Footer */
 .footer {
-  background-color: #050232; /* Dark background color */
-  color: var(--text-white); /* White text color */
-  padding: 2rem; /* Padding for spacing */
+  background-color: var(--primary); /* Dark background color */
+  color: #888D93; /* White text color */
+  padding: 4rem 2rem 2rem; /* Padding for spacing */
   text-align: center;
 }
 
 .footer-container {
   display: flex;
-  flex-direction: column;
-  gap: 2rem;
+  flex-direction: row;
+  gap: 5rem;
   max-width: 1200px;
   margin: 0 auto;
+
 }
 
 .footer-logo {
-  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+.footer-logo .logo{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+.footer-logo img {
+  width: 50px;
 }
 
 .footer-logo h1 {
   font-size: 2rem;
   margin-bottom: 0.5rem;
+  font-weight: 800;
+  color: white;
 }
 
 .footer-logo p {
@@ -32,15 +47,17 @@
   flex-wrap: wrap;
   justify-content: space-between;
   gap: 2rem;
+  
 }
 
 .footer-section {
   flex: 1;
   min-width: 250px;
+  text-align: left;
 }
 
 .footer-section h3 {
-  font-size: 1.2rem;
+  font-size: 1.5rem;
   margin-bottom: 1rem;
   color: var(--text-white); /* Use text color for headings */
 }
@@ -53,12 +70,14 @@
 
 .footer-section ul li {
   margin-bottom: 0.5rem;
+
 }
 
 .footer-section ul li a {
-  color: var(--text-white); /* Link color */
   text-decoration: none;
   transition: color 0.3s ease;
+  color: #888D93; /* White text color */
+
 }
 
 .footer-section ul li a:hover {
@@ -67,7 +86,6 @@
 
 .social-media {
   display: flex;
-  justify-content: center;
   gap: 1rem;
 }
 

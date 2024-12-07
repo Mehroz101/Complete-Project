@@ -8,6 +8,17 @@ import Partner2 from "../assets/partner-2.png";
 import Partner3 from "../assets/partner-3.png";
 import Partner4 from "../assets/partner-4.png";
 import { useSetting } from "../context/WebsiteSetting";
+import FindParkingHomeCard from "../components/FindParkingHomeCard";
+import findLocationIcon from "../assets/search.png";
+import reserveIcon from "../assets/reserved.png";
+import payIcon from "../assets/booking.png";
+import userFrinedlyIcon from "../assets/user-friendly.png";
+import secureIcon from "../assets/shield.png";
+import chooseIcon from "../assets/choice.png";
+import availableIcon from "../assets/available.png";
+import curveLine from "../assets/curveline.png";
+import { Link } from "react-router-dom";
+
 // import { getAllReviews, getSpaceReviews } from "../services/spaceService";
 // import { reviewDateCalculator } from "../parkingOwner/components/Functions";
 const Home = () => {
@@ -93,14 +104,25 @@ const Home = () => {
 
   return (
     <>
-      <Navbar siteName={siteSetting?.siteName} />
-      <div className="hero_section">
+      <Navbar siteName={siteSetting?.siteName || "Parkify"} />
+      <div className="hero_sectionnew">
+        <div className="hero_left">
+          <h1>Find Your Perfect Parking Spot Anytime, Anywhere!</h1>
+          <span>
+            Book and reserve parking spaces hassle-free with our smart parking
+            solution
+          </span>
+        </div>
+        <div className="hero_right">
+          <FindParkingHomeCard />
+        </div>
+      </div>
+      {/* <div className="hero_section">
         <div className="hero_left">
           <ParkingFinderCard />
         </div>
         <div className="hero_right">
           <div className="here_right_text">
-            {/* //  <h1>Smart <span>Parking</span> Smart <span>Solution</span></h1>  */}
             <h1>
               Find Your Perfect Parking Spot <span> {text}</span>
             </h1>
@@ -112,7 +134,7 @@ const Home = () => {
             </p>
           </div>
         </div>
-      </div>
+      </div> */}
       <div className="howtobook_container">
         <h2>How It Works?</h2>
         <p className="sporttext">
@@ -122,36 +144,45 @@ const Home = () => {
         <div className="stepboxs">
           <div className="step_box">
             <div className="number">
-              <span>1</span>
+              <img src={findLocationIcon} alt="" />
+              {/* <i class="fa-solid fa-magnifying-glass-location"></i>{" "} */}
             </div>
-            <h3>Explore Nearby Parking</h3>
-            <p>
-              Open our platform and instantly view available parking spots in
-              your desired location. Use the map or search function to explore
-              nearby options and filter by price, distance, or amenities.
-            </p>
+            <div className="text">
+              <h3>Explore Nearby Parking</h3>
+              <p>
+                Open our platform and instantly view available parking spots in
+                your desired location. Use the map or search function to explore
+                nearby options and filter by price, distance, or amenities.
+              </p>
+            </div>
           </div>
           <div className="step_box">
             <div className="number">
-              <span>2</span>
+              <img src={reserveIcon} alt="" />
+              {/* <i class="fa-solid fa-circle-check"></i>{" "} */}
             </div>
-            <h3>Choose Your Spot</h3>
-            <p>
-              Browse through available spots, check real-time availability, and
-              view detailed information including photos and user reviews.
-              Select the perfect spot that fits your needs.
-            </p>
+            <div className="text">
+              <h3>Choose Your Spot</h3>
+              <p>
+                Browse through available spots, check real-time availability,
+                and view detailed information including photos and user reviews.
+                Select the perfect spot that fits your needs.
+              </p>
+            </div>
           </div>
           <div className="step_box">
             <div className="number">
-              <span>3</span>
+              <img src={payIcon} alt="" />
+              {/* <i class="fa-solid fa-bookmark"></i>{" "} */}
             </div>
-            <h3>Reserve & Pay</h3>
-            <p>
-              Once you’ve found the ideal spot, reserve it with a click.
-              Complete your payment securely, and receive instant confirmation
-              with all the details you need.
-            </p>
+            <div className="text">
+              <h3>Reserve & Pay</h3>
+              <p>
+                Once you’ve found the ideal spot, reserve it with a click.
+                Complete your payment securely, and receive instant confirmation
+                with all the details you need.
+              </p>
+            </div>
           </div>
         </div>
       </div>
@@ -167,28 +198,40 @@ const Home = () => {
           {" "}
           <div className="feature-box">
             <div className="icon">
-              <i className="fas fa-search"></i>
+              <img src={availableIcon} alt="" />
+              {/* <i className="fas fa-search"></i> */}
             </div>
-            <h3>Real-Time Availability</h3>
-            <p>Get up-to-date information on available parking spots.</p>
+            <div className="text">
+              <h3>Real-Time Availability</h3>
+              <p>Get up-to-date information on available parking spots.</p>
+            </div>
           </div>
           <div className="feature-box">
             <div className="icon">
-              <i className="fas fa-lock"></i>
+              <img src={secureIcon} alt="" />
+              {/* <i className="fas fa-lock"></i> */}
             </div>
-            <h3>Secure Payments</h3>
-            <p>Enjoy secure transactions with our integrated payment system.</p>
+            <div className="text">
+              <h3>Secure Payments</h3>
+              <p>
+                Enjoy secure transactions with our integrated payment system.
+              </p>
+            </div>
           </div>
           <div className="feature-box">
             <div className="icon">
-              <i className="fas fa-mobile-alt"></i>
+              <img src={userFrinedlyIcon} alt="" />
+              {/* <i className="fas fa-mobile-alt"></i> */}
             </div>
-            <h3>User-Friendly Interface</h3>
-            <p>Easy navigation and quick searches for your convenience.</p>
+            <div className="text">
+              <h3>User-Friendly Interface</h3>
+              <p>Easy navigation and quick searches for your convenience.</p>
+            </div>
           </div>
           <div className="feature-box">
             <div className="icon">
-              <i className="fas fa-calendar-day"></i>
+              <img src={chooseIcon} alt="" />
+              {/* <i className="fas fa-calendar-day"></i> */}
             </div>
             <h3>Flexible Options</h3>
             <p>Reserve for a few hours or several days, based on your needs.</p>
@@ -201,6 +244,7 @@ const Home = () => {
         </div>
         <div className="feature-content">
           <p className="supporting-line">Discover Our Key Feature</p>
+          <img src={curveLine} alt="" />
           <h2>Unlock the Best Parking Experience</h2>
           <p>
             Our innovative system makes parking and renting spaces more
@@ -280,9 +324,9 @@ const Home = () => {
             Sign up now to find your perfect parking spot or list your space for
             rent. Experience the future of parking with our smart solution.
           </p>
-          <a href="#signup" className="cta-button">
+          <Link to={"/signup"} className="cta-button">
             Sign Up Now
-          </a>
+          </Link>
         </div>
       </section>
 

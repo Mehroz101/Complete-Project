@@ -1,13 +1,17 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "../styles/Footer.css";
+import locationIcon from "../assets/gps.png";
 const Footer = ({ siteName }) => {
   return (
     <>
       <footer className="footer">
         <div className="footer-container">
           <div className="footer-logo">
-            <h1>{siteName}</h1>
+            <div className="logo">
+              <img src={locationIcon} alt="" />
+              <h1>{siteName || "Smart Parking"}</h1>
+            </div>
             <p>Your smart solution for parking.</p>
           </div>
           <div className="footer-links">
@@ -27,7 +31,7 @@ const Footer = ({ siteName }) => {
               </ul>
             </div>
             <div className="footer-section">
-              <h3>Contact Us</h3>
+              <h3>Contact Info</h3>
               <ul>
                 <li>
                   <Link to="" mailTo>
