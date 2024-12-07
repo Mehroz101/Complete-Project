@@ -4,10 +4,11 @@ import Navbar from "../components/Navbar";
 import { useAuth } from "../context/AuthContext";
 
 import { Link, Outlet, useLocation } from "react-router-dom";
+import { useSetting } from "../context/WebsiteSetting";
 const Profile = () => {
   const location = useLocation(); // Get the current location (URL)
   const [activeLink, setActiveLink] = useState("profile");
-
+  const { siteSetting } = useSetting();
   useEffect(() => {
     const pathParts = location.pathname.split("/"); // Split the path by "/"
     const lastPart = pathParts[pathParts.length - 1] || "profile"; // Get the last part, fallback to "profile"
@@ -22,7 +23,7 @@ const Profile = () => {
   };
   return (
     <>
-      <Navbar />
+      <Navbar siteName={siteSetting?.siteName || "Parking Owner"} />
       <div className="profile_page">
         <div className="profile_left">
           <ul>

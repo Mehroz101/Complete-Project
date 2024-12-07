@@ -46,8 +46,6 @@ const OverviewStats = () => {
       }, 0)
     : 0;
 
-
-
   return (
     <div className="overview_stats">
       <div className="stats_container">
@@ -56,7 +54,7 @@ const OverviewStats = () => {
             <span>Total Earnings</span>
           </div>
           <div className="stat_value">
-            <h2>${totalEarning.toFixed(2)}</h2>
+            <h2>Rs. {totalEarning.toFixed(2)}</h2>
           </div>
         </div>
         <div className="stat_item">
@@ -80,7 +78,7 @@ const OverviewStats = () => {
             <span>Withdrawable</span>
           </div>
           <div className="stat_value">
-            <h2>${withdrawable.toFixed(2)}</h2>
+            <h2>Rs. {withdrawable.toFixed(2)}</h2>
           </div>
         </div>
       </div>

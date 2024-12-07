@@ -16,6 +16,7 @@
   padding: var(--spacing-small) var(--spacing-large);
   flex: 1;
   align-self: center;
+  max-width: 700px;
   justify-self: center;
 }
 .hero_sectionnew .hero_left h1{
