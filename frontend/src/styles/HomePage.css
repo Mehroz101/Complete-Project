@@ -1,6 +1,6 @@
 .hero_sectionnew{
   background: url("../assets/hero_background.svg");
-  background-position: left top;
+  background-position: right top;
   background-size:contain;
   background-repeat: no-repeat;
   height: 80vh;
@@ -15,8 +15,8 @@
 .hero_sectionnew .hero_left{
   padding: var(--spacing-small) var(--spacing-large);
   flex: 1;
+  align-self: center;
   justify-self: center;
-  margin-top: 50px;
 }
 .hero_sectionnew .hero_left h1{
   font-size: 60px;
@@ -42,7 +42,7 @@
   background-color: #fff;
   flex: 1;
   max-width: 500px;
-  padding: 20px 30px;
+  padding: 40px 30px 30px;
   border-radius: 10px;
   display: flex;
   flex-direction: column;

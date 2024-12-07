@@ -55,14 +55,18 @@ const RequestRow = ({
           )}
         </td>
         <td className="actions">
-          <Link title="view request" to={`view-request/${reservationReq._id}`}>
+          <Link
+            title="view request"
+            to={`/dashboard/reservation-request/view-request/${reservationReq._id}`}
+          >
             <i className="fa-regular fa-eye"></i>
           </Link>
           {reservationReq.state === "completed" ||
           reservationReq.state === "cancelled" ||
-          reservationReq.state === "confirmed"||
-          reservationReq.state === "reserved"
-           ? "" : (
+          reservationReq.state === "confirmed" ||
+          reservationReq.state === "reserved" ? (
+            ""
+          ) : (
             <>
               <Link title="confirm" onClick={confirmReservation}>
                 <i className="fa-solid fa-check"></i>

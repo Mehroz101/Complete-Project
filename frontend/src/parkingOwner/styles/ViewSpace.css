@@ -55,7 +55,7 @@
   margin-bottom: 10px;
 }
 .space-address {
-  color: #999;
+  color: var(--secondary);
   display: flex;
   align-items: center;
   gap: 5px;
@@ -89,12 +89,22 @@
 .location-section {
   margin-top: 20px;
 }
+.no-scrollbar {
+  overflow: auto; /* Enables scrolling */
+ /* Hides scrollbar in Firefox */
+}
+
 
 /* Reviews */
 .reviews-section {
   margin-top: 30px;
   max-height: 600px;
   overflow: scroll;
+  scrollbar-width: none;
+}
+.reviews-section::-webkit-scrollbar {
+  display: none; /* Hides scrollbar in WebKit-based browsers (Chrome, Safari, etc.) */
+
 }
 .review-list {
   display: flex;

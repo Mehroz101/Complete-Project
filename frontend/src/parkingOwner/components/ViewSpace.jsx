@@ -4,6 +4,13 @@ import { getSpace, getSpaceReviews } from "../../services/spaceService";
 import "../styles/ViewSpace.css";
 import { reviewDateCalculator } from "./Functions";
 import { useParkingOwner } from "../../context/ReservationContext";
+import RequestRow from "./RequestRow";
+import {
+  cancelReservation,
+  confirmReservation,
+} from "../../services/reservationService";
+
+const REACT_APP_API_URL = import.meta.env.REACT_APP_API_URL;
 
 const ViewSpace = () => {
   const [space, setSpace] = useState(null);
@@ -11,20 +18,63 @@ const ViewSpace = () => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [images, setImages] = useState([]);
   const { spaceId } = useParams();
-  const REACT_APP_API_URL = import.meta.env.REACT_APP_API_URL;
   const [reservationCount, setReservationCount] = useState(0);
+  const [filteredData, setFilteredData] = useState([]);
   const { reservation, space: spaceData } = useParkingOwner();
-  const getSpaceData = async () => {
-    const spaceInfo = spaceData?.filter((space) => space?._id === spaceId);
-    //console.log("Filtered Space Info:", spaceInfo); // Log the filtered space info
-    if (spaceInfo.length > 0) {
-      setSpace(spaceInfo[0]);
-      setImages(spaceInfo[0]?.images || []);
-      setCurrentImageIndex(0);
-    } else {
-      console.error("No space found for the given spaceId:", spaceId);
+
+  const fetchSpaceData = async () => {
+    try {
+      const spaceInfo = spaceData?.find((space) => space._id === spaceId);
+      if (spaceInfo) {
+        setSpace(spaceInfo);
+        setImages(spaceInfo?.images || []);
+      } else {
+        const fetchedSpace = await getSpace(spaceId);
+        setSpace(fetchedSpace);
+        setImages(fetchedSpace?.images || []);
+      }
+    } catch (error) {
+      console.error("Error fetching space data:", error);
     }
   };
+
+  const fetchReviews = async () => {
+    try {
+      const fetchedReviews = await getSpaceReviews(spaceId);
+      setReview(fetchedReviews);
+    } catch (error) {
+      console.error("Error fetching reviews:", error);
+    }
+  };
+
+  const filterReservations = () => {
+    const filtered = reservation?.filter((res) => res.spaceId?._id === spaceId);
+    setFilteredData(filtered);
+
+    const completedCount = filtered?.filter(
+      (res) => res.state === "completed"
+    ).length;
+    setReservationCount(completedCount);
+  };
+
+  const handleCancelReservation = async (reservationId) => {
+    try {
+      await cancelReservation(reservationId);
+      filterReservations();
+    } catch (error) {
+      console.error("Error cancelling reservation:", error);
+    }
+  };
+
+  const handleConfirmReservation = async (reservationId) => {
+    try {
+      await confirmReservation(reservationId);
+      filterReservations();
+    } catch (error) {
+      console.error("Error confirming reservation:", error);
+    }
+  };
+
   const handleNextImage = () => {
     setCurrentImageIndex((prevIndex) =>
       prevIndex === images.length - 1 ? 0 : prevIndex + 1
@@ -36,23 +86,12 @@ const ViewSpace = () => {
       prevIndex === 0 ? images.length - 1 : prevIndex - 1
     );
   };
-  const getReview = async () => {
-    try {
-      const response1 = await getSpaceReviews(spaceId);
-      //console.log(response1);
-      setReview(response1);
-    } catch (error) {
-      //console.log(error.message);
-    }
-  };
+
   useEffect(() => {
-    getSpaceData();
-    getReview();
-    const count = reservation
-      ?.filter((reservation) => reservation.spaceId?._id === space?._id)
-      .filter((reservation) => reservation.state === "completed").length;
-    setReservationCount(count);
-  }, [spaceId, spaceData, reservation]); // Add spaceData and reservation as dependencies
+    fetchSpaceData();
+    fetchReviews();
+    filterReservations();
+  }, [spaceId, reservation, spaceData]);
 
   return (
     <div className="view-space-container">
@@ -86,7 +125,6 @@ const ViewSpace = () => {
             </div>
             <div className="total-booking">{reservationCount} bookings</div>
           </div>
-
           <div className="description-section">
             <h3>Short Description</h3>
             <p>{space?.short_description}</p>
@@ -94,7 +132,6 @@ const ViewSpace = () => {
             <p>{space?.description}</p>
           </div>
 
-          {/* Google Map Location */}
           <div className="location-section">
             <h3>Location</h3>
             <iframe
@@ -104,31 +141,26 @@ const ViewSpace = () => {
             ></iframe>
           </div>
 
-          {/* Reviews Section */}
-          <div className="reviews-section">
-            <h3>Reviews</h3>
-            <div className="review-list">
-              {review?.map((review, index) => {
-                return (
-                  <>
-                    <div className="review-item" key={index}>
-                      <h4>{review?.userId?.fName}</h4>
-                      <div className="review-meta">
-                        <span>{review?.rating}</span>
-                        <i className="fa-solid fa-star"></i>
-                        <span>{reviewDateCalculator(review.createdAt)}</span>
-                      </div>
-                      <p>"{review?.reviewMsg}"</p>
+          {review.length > 0 && (
+            <div className="reviews-section">
+              <h3>Reviews</h3>
+              <div className="review-list">
+                {review.map((review, index) => (
+                  <div className="review-item" key={index}>
+                    <h4>{review?.userId?.fName}</h4>
+                    <div className="review-meta">
+                      <span>{review?.rating}</span>
+                      <i className="fa-solid fa-star"></i>
+                      <span>{reviewDateCalculator(review.createdAt)}</span>
                     </div>
-                  </>
-                );
-              })}
-              {/* Add more review items here */}
+                    <p>"{review?.reviewMsg}"</p>
+                  </div>
+                ))}
+              </div>
             </div>
-          </div>
+          )}
         </div>
 
-        {/* Features and Pricing */}
         <div className="details-right">
           <div className="features-section">
             <h4>Features</h4>
@@ -153,6 +185,42 @@ const ViewSpace = () => {
             </div>
           </div>
         </div>
+      </div>
+
+      <div className="reservation_requests">
+        <table className="highlight responsive_table">
+          <thead>
+            <tr>
+              <th>Id</th>
+              <th>Title</th>
+              <th>Request Id</th>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Arrival</th>
+              <th>Leave</th>
+              <th>Price</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {filteredData.length > 0 ? (
+              filteredData.map((reservation, index) => (
+                <RequestRow
+                  key={reservation._id}
+                  reservation={reservation}
+                  index={index + 1}
+                  handleCancelReservation={handleCancelReservation}
+                  handleConfirmReservation={handleConfirmReservation}
+                />
+              ))
+            ) : (
+              <tr>
+                <td colSpan="10">No reservations found</td>
+              </tr>
+            )}
+          </tbody>
+        </table>
       </div>
     </div>
   );
