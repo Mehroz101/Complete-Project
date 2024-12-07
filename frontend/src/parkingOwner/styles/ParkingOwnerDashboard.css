@@ -38,7 +38,7 @@
 
 .dashboard_right::-webkit-scrollbar {
   display: none; /* Hides scrollbar in WebKit-based browsers (Chrome, Safari, etc.) */
-}
+} 
 
 @media (max-width: 768px) {
   .dashboard_page {

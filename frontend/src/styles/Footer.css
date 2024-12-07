@@ -4,6 +4,7 @@
   color: #888D93; /* White text color */
   padding: 4rem 2rem 2rem; /* Padding for spacing */
   text-align: center;
+  
 }
 
 .footer-container {
@@ -54,6 +55,7 @@
   flex: 1;
   min-width: 250px;
   text-align: left;
+
 }
 
 .footer-section h3 {
