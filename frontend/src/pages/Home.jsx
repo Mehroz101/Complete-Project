@@ -233,8 +233,12 @@ const Home = () => {
               <img src={chooseIcon} alt="" />
               {/* <i className="fas fa-calendar-day"></i> */}
             </div>
-            <h3>Flexible Options</h3>
-            <p>Reserve for a few hours or several days, based on your needs.</p>
+            <div className="text">
+              <h3>Flexible Options</h3>
+              <p>
+                Reserve for a few hours or several days, based on your needs.
+              </p>
+            </div>
           </div>
         </div>
       </section>
