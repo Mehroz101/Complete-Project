@@ -118,7 +118,7 @@
   margin-top: 10px;
   overflow-y: scroll;
   min-height: 255px;
-  max-height: 100vh;
+  max-height: calc(100vh - 190px);
   background-color: white;
 }
 .app_container .app_left .Listing_container::-webkit-scrollbar {
