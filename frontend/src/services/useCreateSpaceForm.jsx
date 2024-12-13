@@ -69,7 +69,7 @@ export const useCreateSpaceForm = () => {
         handleError(response);
       }
     } catch (error) {
-      handleError(error);
+      // handleError(error);
     }
   };
 

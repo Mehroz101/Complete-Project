@@ -5,9 +5,7 @@ import axios from "axios";
 import "../styles/MapBox.css";
 import { useParams } from "react-router-dom";
 import { calculateDistance } from "../parkingOwner/components/Functions";
-
-const TOKEN =
-  "pk.eyJ1IjoibWVocm96ZmFyb29xIiwiYSI6ImNtMGc2ODJqZzE0dDkyanFyamlwdmQ3eTIifQ.tKoAqHa7Fyq96aj59q4vlw";
+const TOKEN = import.meta.env.REACT_APP_TOKEN;
 
 const MapBox = ({ spaces, onShowDetail, getSpace }) => {
   const { searchInput } = useParams();
@@ -34,42 +32,42 @@ const MapBox = ({ spaces, onShowDetail, getSpace }) => {
       return distance <= 5; // Only show spaces within 5 km
     });
   };
-  
+
   useEffect(() => {
     mapboxgl.accessToken = TOKEN;
-  
+
     mapRef.current = new mapboxgl.Map({
       container: mapContainerRef.current,
       style: "mapbox://styles/mehrozfarooq/cm0g6qi11000z01pihk088cvz",
       center: [viewPort.longitude, viewPort.latitude],
       zoom: viewPort.zoom,
     });
-  
+
     mapRef.current.addControl(new mapboxgl.NavigationControl());
-  
+
     // Declare a variable to track the current marker
     let currentMarker = null;
-  
+
     // Add single-click event listener to the map
     mapRef.current.on("click", (e) => {
       const { lng, lat } = e.lngLat; // Get longitude and latitude of the clicked point
       //console.log("Clicked at:", lng, lat); // Log for debugging
-  
+
       // Remove the previous marker if it exists
       if (currentMarker) {
         currentMarker.remove();
       }
-  
+
       // Create a new marker and add it to the map
       currentMarker = new mapboxgl.Marker({ color: "green" })
         .setLngLat([lng, lat])
         .addTo(mapRef.current);
-      
+
       // Update the search location and fetch nearby spaces
       setSearchLocation({ latitude: lat, longitude: lng });
       getSpace({ latitude: lat, longitude: lng });
     });
-  
+
     return () => {
       if (mapRef.current) {
         mapRef.current.off("click"); // Clean up event listener on component unmount
@@ -77,7 +75,7 @@ const MapBox = ({ spaces, onShowDetail, getSpace }) => {
       }
     };
   }, []);
-  
+
   // Update map center when viewPort changes
   useEffect(() => {
     if (mapRef.current) {
