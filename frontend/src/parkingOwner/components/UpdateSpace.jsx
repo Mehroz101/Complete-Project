@@ -272,17 +272,6 @@ const UpdateSpace = () => {
         <div className="location">
           <h2>Location</h2>
           <div className="input_combo_box">
-            {/* Longitude Input */}
-            <div className="input_box">
-              <label htmlFor="longitude">Longitude</label>
-              <input
-                type="number"
-                name="longitude"
-                placeholder=""
-                value={spaceDetails.longitude || ""}
-                onChange={handleChange}
-              />
-            </div>
             {/* Latitude Input */}
             <div className="input_box">
               <label htmlFor="latitude">Latitude</label>
@@ -291,6 +280,17 @@ const UpdateSpace = () => {
                 name="latitude"
                 placeholder=""
                 value={spaceDetails.latitude || ""}
+                onChange={handleChange}
+              />
+            </div>
+            {/* Longitude Input */}
+            <div className="input_box">
+              <label htmlFor="longitude">Longitude</label>
+              <input
+                type="number"
+                name="longitude"
+                placeholder=""
+                value={spaceDetails.longitude || ""}
                 onChange={handleChange}
               />
             </div>
