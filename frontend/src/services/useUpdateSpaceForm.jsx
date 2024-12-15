@@ -20,6 +20,8 @@ export const useUpdateSpaceForm = () => {
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
+    const lettersWithSpacesRegex = /^[A-Za-z\s]*$/; // Only letters and spaces
+    const numbersRegex = /^[0-9]*$/; // Only numbers
 
     if (type === "checkbox") {
       setSpaceDetails((prevState) => ({
@@ -29,10 +31,32 @@ export const useUpdateSpaceForm = () => {
           : prevState.features.filter((feature) => feature !== value),
       }));
     } else {
-      setSpaceDetails((prevState) => ({
-        ...prevState,
-        [name]: value,
-      }));
+      if (name === 'title' || name === "country" || name === "city" || name === "short_description" || name === "description") {
+        // If the input is for email, allow special characters
+        if (lettersWithSpacesRegex.test(value) || value === ' ') {
+          setSpaceDetails((prevState) => ({
+                ...prevState,
+                [name]: value,
+            }));
+        }
+      }
+
+    else if(name === 'per_hour' || name === "per_day") {
+        // If the input is for email, allow special characters
+        if (numbersRegex.test(value) || value === '') {
+          setSpaceDetails((prevState) => ({
+                ...prevState,
+                [name]: value,
+            }));
+        }
+      }
+      else{
+
+        setSpaceDetails((prevState) => ({
+          ...prevState,
+          [name]: value,
+        }));
+      }
     }
     //console.log("handle change function");
     //console.log(JSON.stringify(spaceDetails.features));
