@@ -21,7 +21,42 @@ export const useReservationForm = () => {
     per_day: "",
   });
   const handleChange = (e) => {
-    setReservation({ ...reservation, [e.target.name]: e.target.value });
+    const {name,value} = e.target; 
+    const lettersWithSpacesRegex = /^[A-Za-z\s]*$/; // Only letters and spaces
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Basic email validation
+    const numbersRegex = /^[0-9]*$/; // Only numbers
+
+    if (name === 'name') {
+        // If the input is for email, allow special characters
+        if (lettersWithSpacesRegex.test(value) || value === ' ') {
+          setReservation((prevState) => ({
+                ...prevState,
+                [name]: value,
+            }));
+        }
+      }
+    else if(name === 'email') {
+        // If the input is for email, allow special characters
+        if (emailRegex.test(value) || value === '') {
+          setReservation((prevState) => ({
+                ...prevState,
+                [name]: value,
+            }));
+        }
+      }
+    else if(name === 'phoneNo') {
+        // If the input is for email, allow special characters
+        if (numbersRegex.test(value) || value === '') {
+          setReservation((prevState) => ({
+                ...prevState,
+                [name]: value,
+            }));
+        }
+      }
+      else{
+
+        setReservation({ ...reservation, [name]: value });
+      }
   };
   const handleSubmit = async () => {
     const {

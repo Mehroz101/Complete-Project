@@ -21,7 +21,45 @@ export const customReservationRequest = () => {
     price_perday:"",
   });
   const handleChange = (e) => {
-    setCustomRequest({ ...customRequest, [e.target.name]: e.target.value });
+    const {name,value} = e.target; 
+    console.log("name")
+    const lettersWithSpacesRegex = /^[A-Za-z\s]*$/; // Only letters and spaces
+    const vehicleNoRegex = /^[A-Za-z0-9]*$/;    // Basic vehicleNo validation
+
+    const numbersRegex = /^[0-9]*$/; // Only numbers
+
+    if (name === 'name') {
+        // If the input is for email, allow special characters
+        if (lettersWithSpacesRegex.test(value) || value === '') {
+          setCustomRequest((prevState) => ({
+                ...prevState,
+                [name]: value,
+            }));
+        }
+      }
+   
+    else if(name === 'phoneNo') {
+        // If the input is for email, allow special characters
+        if (numbersRegex.test(value) || value === '') {
+          setCustomRequest((prevState) => ({
+                ...prevState,
+                [name]: value,
+            }));
+        }
+      }
+    else if(name === 'vehicleNo') {
+        // If the input is for email, allow special characters
+        if (vehicleNoRegex.test(value) || value === '') {
+          setCustomRequest((prevState) => ({
+                ...prevState,
+                [name]: value,
+            }));
+        }
+      }
+      else{
+        setCustomRequest({ ...customRequest, [name]: value });
+
+      }
   };
   const handleSubmit = async () => {
     const {

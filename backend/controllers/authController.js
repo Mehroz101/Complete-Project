@@ -185,9 +185,10 @@ const AdminLogin = async (req, res) => {
   }
 };
 const AdminSignup = async (req, res) => {
-  const { username, password, confirmPassword } = req.body;
+  const { username, password, cPassword } = req.body;
   try {
-    if (password !== confirmPassword) {
+    console.log(password,cPassword)
+    if (password !== cPassword) {
       return res.status(422).json({
         success: false,
         message: "Passwords do not match",

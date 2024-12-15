@@ -12,11 +12,38 @@ export const useAccountInformationForm = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setUserDetail((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
-  };
+
+    // Define regex for letters only, email, and numbers
+    const lettersRegex = /^[A-Za-z]*$/; // Only letters
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Basic email validation
+    const numbersRegex = /^[0-9]*$/; // Only numbers
+
+    if (name === 'email') {
+        // If the input is for email, allow special characters
+        if (emailRegex.test(value) || value === '') {
+            setUserDetail((prevState) => ({
+                ...prevState,
+                [name]: value,
+            }));
+        }
+    } else if (name === 'phone') {
+        // If the input is for phone, allow numbers only
+        if (numbersRegex.test(value) || value === '') {
+            setUserDetail((prevState) => ({
+                ...prevState,
+                [name]: value,
+            }));
+        }
+    } else {
+        // For other inputs (like name), restrict to letters only
+        if (lettersRegex.test(value) || value === '') {
+            setUserDetail((prevState) => ({
+                ...prevState,
+                [name]: value,
+            }));
+        }
+    }
+};
 
   const updateUserDetails = (details) => {
     setUserDetail((prevState) => ({

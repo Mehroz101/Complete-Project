@@ -55,7 +55,7 @@ export const getNearbySpaces = (userLat, userLong) => {
       space.latitude,
       space.longitude
     );
-    return distance <= 5; // Only show spaces within 5 km
+    return distance <= 10; // Only show spaces within 5 km
   });
 };
 export const reviewDateCalculator = (dateData) => {

@@ -14,7 +14,20 @@ export const useParkingFinderCardForm = () => {
     totalHours: "",
   });
   const handleChange = (e) => {
-    setFindParking({ ...findParking, [e.target.name]: e.target.value });
+    const lettersRegex = /^[A-Za-z]*$/; // Only letters
+    if(e.target.name == "searchInput"){
+      if (lettersRegex.test(e.target.value) || e.target.value === '') {
+        setFindParking((prevState) => ({
+            ...prevState,
+            [e.target.name]: e.target.value,
+        }));
+    }
+    }
+    else{
+
+      setFindParking({ ...findParking, [e.target.name]: e.target.value });
+    }
+   
   };
 
   const handleSubmit = () => {
