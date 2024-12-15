@@ -2,25 +2,25 @@ import React, { useEffect, useState } from "react";
 import "../styles/CreateSpace.css";
 import { useCreateSpaceForm } from "../../services/useCreateSpaceForm";
 import FileUpload from "./FileUpload";
-import {useNavigate} from "react-router-dom"
+import { useNavigate } from "react-router-dom";
 
 const CreateSpace = () => {
   const { spaceDetails, handleChange, handleSubmit } = useCreateSpaceForm();
   const [uploadedFiles, setUploadedFiles] = useState([]);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const handleFilesChange = (files) => {
     setUploadedFiles(files);
     //console.log("Files received from FileUpload:", files); // Log the files to the console
   };
 
-  const handleFormSubmit =async (e) => {
+  const handleFormSubmit = async (e) => {
     e.preventDefault();
     //console.log(spaceDetails);
     //console.log("uploadedFiles");
     //console.log(uploadedFiles);
     const response = await handleSubmit(uploadedFiles);
-    if(response === 201){
-      navigate(-1)
+    if (response === 201) {
+      navigate(-1);
     }
   };
 
@@ -36,6 +36,7 @@ const CreateSpace = () => {
             <input
               type="text"
               name="title"
+              maxLength={100}
               placeholder="Enter title"
               value={spaceDetails.title}
               onChange={handleChange}
@@ -47,7 +48,8 @@ const CreateSpace = () => {
             <input
               type="text"
               name="short_description"
-              placeholder="Maximum 10-15 words"
+              maxLength={100}
+              placeholder="Maximum 150 characters"
               value={spaceDetails.short_description}
               onChange={handleChange}
             />
@@ -59,7 +61,8 @@ const CreateSpace = () => {
               name="description"
               cols="30"
               rows="10"
-              placeholder="Maximum 150 words"
+              maxLength={1000}
+              placeholder="Maximum 1000 characters"
               value={spaceDetails.description}
               onChange={handleChange}
             ></textarea>
@@ -80,6 +83,7 @@ const CreateSpace = () => {
               <input
                 type="text"
                 name="city"
+                maxLength={100}
                 placeholder="Enter city name"
                 value={spaceDetails.city}
                 onChange={handleChange}
@@ -90,6 +94,7 @@ const CreateSpace = () => {
               <input
                 type="text"
                 name="country"
+                maxLength={100}
                 placeholder="Enter country name"
                 value={spaceDetails.country}
                 onChange={handleChange}
@@ -102,6 +107,7 @@ const CreateSpace = () => {
             <input
               type="text"
               name="address"
+              maxLength={200}
               placeholder="Enter complete address"
               value={spaceDetails.address}
               onChange={handleChange}
@@ -151,17 +157,6 @@ const CreateSpace = () => {
         <div className="location">
           <h2>Location</h2>
           <div className="input_combo_box">
-            {/* Longitude Input */}
-            <div className="input_box">
-              <label htmlFor="longitude">Longitude</label>
-              <input
-                type="number"
-                name="longitude"
-                placeholder=""
-                value={spaceDetails.longitude}
-                onChange={handleChange}
-              />
-            </div>
             {/* Latitude Input */}
             <div className="input_box">
               <label htmlFor="latitude">Latitude</label>
@@ -170,6 +165,17 @@ const CreateSpace = () => {
                 name="latitude"
                 placeholder=""
                 value={spaceDetails.latitude}
+                onChange={handleChange}
+              />
+            </div>
+            {/* Longitude Input */}
+            <div className="input_box">
+              <label htmlFor="longitude">Longitude</label>
+              <input
+                type="number"
+                name="longitude"
+                placeholder=""
+                value={spaceDetails.longitude}
                 onChange={handleChange}
               />
             </div>
