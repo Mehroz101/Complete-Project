@@ -15,13 +15,15 @@ const ResetPass = () => {
   const handleFormSubmit = async (e) => {
     e.preventDefault();
 
-    const promise = handleSubmit(e); // Assuming handleSubmit returns a promise
-
-    notifyPromise(promise, {
-      pending: "Rest Password...",
-      success: "Password Reset Successfully",
-      error: "Failed to reset password!",
-    });
+    const promise =await handleSubmit(e); // Assuming handleSubmit returns a promise
+if(userDetail.password<6){
+  return notify("warning", "password must be atleast 6 character");
+}
+// notifyPromise(promise, {
+//   pending: "Reset Password...",
+//   success: "Password Reset Successfully",
+//   error: "Failed to reset password!",
+// });
   };
 
   return (

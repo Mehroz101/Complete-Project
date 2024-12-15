@@ -11,11 +11,24 @@ export const useWithdrawForm = () => {
   });
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setWithdrawDetail((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
+    const {name,value} = e.target;
+    const lettersWithSpacesRegex = /^[A-Za-z\s]*$/; // Only letters and spaces
+    if (name === 'accountName' ) {
+      // If the input is for email, allow special characters
+      if (lettersWithSpacesRegex.test(value) || value === ' ') {
+        setWithdrawDetail((prevState) => ({
+              ...prevState,
+              [name]: value,
+          }));
+      }
+    }
+else{
+
+  setWithdrawDetail((prevState) => ({
+    ...prevState,
+    [name]: value,
+  }));
+}
   };
 
   const handleSubmit = async () => {

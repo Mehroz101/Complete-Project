@@ -19,7 +19,9 @@ export const useResetForm = () => {
   };
 
   const handleSubmit = async (e) => {
-    // //console.log(token);
+    if(userDetail.password.length <6 ){
+      return notify("warning", "password must be atleast 6 character");
+    }
     userDetail.token = token;
     e.preventDefault();
     //console.log(userDetail.password);

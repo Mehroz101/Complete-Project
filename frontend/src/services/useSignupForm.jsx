@@ -26,6 +26,10 @@ export const useSignupForm = () => {
     // //console.log(userDetail)
 
     try {
+      if(userDetail.password.length<6 ){
+       return notify("warning", "password must be atleast 6 character");
+
+      }
       const response = await signupUser({
         email: userDetail.email,
         password: userDetail.password,
