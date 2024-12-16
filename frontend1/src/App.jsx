@@ -19,7 +19,6 @@ const Signup = lazy(() => import("./pages/signup"));
 const Reviews = lazy(() => import("./pages/Reviews"));
 function Fallback({ error }) {
   const regex = /\((.*?):\d+:\d+\)/;
-
   const match = error.stack.match(regex);
 
   if (match) {
