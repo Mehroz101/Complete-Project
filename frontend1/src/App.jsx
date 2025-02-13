@@ -1,7 +1,6 @@
 import React, { Suspense, lazy } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { ErrorBoundary } from "react-error-boundary";
-
 import ROUTES from "./utils/routes";
 import DashboardLayout from "./layout/DashboardLayout";
 import ProtectedRoute from "./context/ProtectedRoute";
@@ -19,7 +18,6 @@ const Signup = lazy(() => import("./pages/signup"));
 const Reviews = lazy(() => import("./pages/Reviews"));
 function Fallback({ error }) {
   const regex = /\((.*?):\d+:\d+\)/;
-
   const match = error.stack.match(regex);
 
   if (match) {

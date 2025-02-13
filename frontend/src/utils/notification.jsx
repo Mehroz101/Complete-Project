@@ -8,7 +8,6 @@ import { toast } from "react-toastify";
 //     error: messages.error || "Error occurred!",
 //   });
 // };
-
 // Existing notify function
 export const notify = (type, message) => {
   const options = {
