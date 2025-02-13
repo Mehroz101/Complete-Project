@@ -109,7 +109,7 @@ const Home = () => {
         <div className="hero_left">
           <h1>Find Your Perfect Parking Spot Anytime, Anywhere!</h1>
           <span>
-            Book and reserve parking spaces hassle-free with our smart parking
+            Book and reserve parking spaces hassle-free with our Parkify
             solution
           </span>
         </div>
@@ -129,7 +129,7 @@ const Home = () => {
             <p>
               Discover the convenience of finding and reserving parking spaces
               in advance. Whether you're heading to work, shopping, or an event,
-              our smart parking solution makes it easy to secure a spot with
+              our Parkify solution makes it easy to secure a spot with
               just a few clicks.
             </p>
           </div>
@@ -190,7 +190,7 @@ const Home = () => {
         <div className="section-header">
           <h2>Why Choose Us</h2>
           <p>
-            Explore the advantages of our smart parking solution and how it
+            Explore the advantages of our Parkify solution and how it
             enhances your parking experience.
           </p>
         </div>{" "}

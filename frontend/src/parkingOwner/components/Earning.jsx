@@ -52,7 +52,7 @@ const Earning = () => {
 
           if (lastMonth < 0) {
             lastMonth = 11;
-            lastMonthYear = thisYear - 1;
+            lastMonthYear = lastMonthYear - 1;
           }
           // //console.log(requestDate.getMonth() >= lastMonth);
           if (
@@ -213,7 +213,7 @@ const Earning = () => {
               </button>
             </div>
             <p className="note">
-              Please note withdraw minimum amount $ 25 per withdraw and cannot
+              Please note withdraw minimum amount  25 per withdraw and cannot
               be undone after withraw. 10% dedection on every withdraw and it may take 7 business days to process
               payment.
             </p>

@@ -24,6 +24,7 @@ export default function BasicFilterDemo() {
   const [filters, setFilters] = useState({
     global: { value: null, matchMode: FilterMatchMode.CONTAINS },
     title: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
+    spaceID: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
     city: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
     state: { value: null, matchMode: FilterMatchMode.EQUALS },
   });
@@ -182,11 +183,11 @@ export default function BasicFilterDemo() {
           />
         </div>
 
-        <Button
+        {/* <Button
           label="Add New Space"
           icon="pi pi-plus"
           onClick={() => console.log("add user")}
-        />
+        /> */}
       </div>
       <div className="card">
         <DataTable
@@ -210,7 +211,7 @@ export default function BasicFilterDemo() {
           />
           <Column
             header="Id"
-            field="_id"
+            field="spaceID"
             style={{ minWidth: "10rem" }}
             filter
             showFilterMenu={false}

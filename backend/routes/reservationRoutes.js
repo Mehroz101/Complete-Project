@@ -17,6 +17,7 @@ const {
   allReservation,
   confirmReservationByAdmin,
   cancelReservationByAdmin,
+  refundReservationByAdmin
 } = require("../controllers/reservationController");
 const authenticateToken = require("../middleware/authMiddleware");
 
@@ -49,4 +50,5 @@ router.post(
 router.get("/allreservations", authenticateToken, allReservation);
 router.post("/cancelbyadmin", authenticateToken, cancelReservationByAdmin);
 router.post("/confirmbyadmin", authenticateToken, confirmReservationByAdmin);
+router.post("/refundbyadmin", authenticateToken, refundReservationByAdmin);
 module.exports = router;

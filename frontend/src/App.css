@@ -43,6 +43,10 @@ body{
   background-color: #ffcdd2 !important; 
   color: #c62828 !important;
 }
+ .status.refund {
+  background-color: #f9e377 !important; 
+  color: #715c07 !important;
+}
 
  .status.reserved {
   background-color: #b3e5fc !important;

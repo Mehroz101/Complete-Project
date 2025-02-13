@@ -30,7 +30,7 @@ const WithdrawRow = ({requests,index}) => {
             <span className={`status ${requests.status}`}>{requests.status}</span>
         </td>
         <td className="order_id">
-            <span >{requests._id}</span>
+            <span >{requests.requestID}</span>
         </td>
         <td>
             <span>Rs. {requests.withdrawAmount}</span>

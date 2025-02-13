@@ -22,7 +22,7 @@ export const useCreateSpaceForm = () => {
     const { name, value, type, checked } = e.target;
     const lettersWithSpacesRegex = /^[A-Za-z\s]*$/; // Only letters and spaces
     const numbersRegex = /^[0-9]*$/; // Only numbers
-
+const numberletterRegex = /^[A-Za-z0-9\s]*$/
     if (type === "checkbox") {
       setSpaceDetails((prevState) => ({
         ...prevState,
@@ -31,8 +31,8 @@ export const useCreateSpaceForm = () => {
           : prevState.features.filter((feature) => feature !== value),
       }));
     } else {
-     
-      if (name === 'title' || name === "country" || name === "city" || name === "short_description" || name === "description") {
+      // name === 'title' ||
+      if ( name === "country" || name === "city" ) {
           // If the input is for email, allow special characters
           if (lettersWithSpacesRegex.test(value) || value === ' ') {
             setSpaceDetails((prevState) => ({
@@ -51,6 +51,15 @@ export const useCreateSpaceForm = () => {
               }));
           }
         }
+        // else if(name === "short_description" || name === "description"){
+          
+        //   if (numberletterRegex.test(value) || value === '') {
+        //     setSpaceDetails((prevState) => ({
+        //           ...prevState,
+        //           [name]: value,
+        //       }));
+        //   }
+        // }
         else{
           setSpaceDetails((prevState) => ({
             ...prevState,

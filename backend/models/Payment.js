@@ -11,6 +11,8 @@ const paymentSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    requestID:{ type: Number, required: true, unique: true },
+
     accountName: {
       type: String,
       required: true,

@@ -45,10 +45,16 @@ const createSpace = async (req, res) => {
     ) {
       return res.status(400).json();
     }
+// Generate the next spaceID
+const lastspace = await Space.findOne({ spaceID: { $exists: true } }).sort({ spaceID: -1 });
+console.log("Last Space:", lastspace);
 
+const nextspaceID = lastspace && lastspace.spaceID ? lastspace.spaceID + 1 : 1;
+console.log("Next Space ID:", nextspaceID);
     const newSpace = new Space({
       userId,
       title,
+      spaceID:nextspaceID,
       short_description,
       description,
       address,

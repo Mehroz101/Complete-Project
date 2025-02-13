@@ -23,8 +23,9 @@ const signup = async (req, res) => {
       });
     }
     const hashPassowrd = await bcryptjs.hash(password, 10);
-
-    const newUser = new User({ email, password: hashPassowrd });
+    const lastuser = await User.findOne({ userID: { $ne: null } }).sort({ userID: -1 });
+    const nextuserID = lastuser ? lastuser.userID + 1 : 1;
+    const newUser = new User({ email, password: hashPassowrd,userID:nextuserID });
     const userCreated = await newUser.save();
 
     res.status(201).json({
@@ -33,6 +34,7 @@ const signup = async (req, res) => {
       user: userCreated,
     });
   } catch (error) {
+    console.log(error.message)
     res.status(500).json({
       success: false,
       message: "Internal Server Error",

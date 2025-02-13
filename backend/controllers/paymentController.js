@@ -80,11 +80,14 @@ const withdrawRequest = async (req, res) => {
           "Withdraw amount does not match the total completed reservation earnings.",
       });
     }
-
+// Generate the next requestID
+const lastrequest = await Payment.findOne().sort({ requestID: -1 });
+const nextrequestID = lastrequest ? lastrequest.requestID + 1 : 1;
     // Create a new payment request
     const newWithdrawRequest = new Payment({
       userId: user_Id,
       accountType,
+      requestID:nextrequestID,
       accountName,
       accountNumber,
       withdrawAmount,
@@ -193,7 +196,7 @@ const braintreePaymentController = async (req, res) => {
 };
 const allEarnings = async (req, res) => {
   try {
-    const response = await Payment.find();
+    const response = await Payment.find().populate("userId","userID");
 
     res.status(200).json(response);
   } catch (error) {

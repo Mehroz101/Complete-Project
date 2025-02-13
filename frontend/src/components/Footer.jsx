@@ -10,7 +10,7 @@ const Footer = ({ siteName }) => {
           <div className="footer-logo">
             <div className="logo">
               <img src={locationIcon} alt="" />
-              <h1>{siteName || "Smart Parking"}</h1>
+              <h1>{siteName || "Parkify"}</h1>
             </div>
             <p>Your smart solution for parking.</p>
           </div>
@@ -64,7 +64,7 @@ const Footer = ({ siteName }) => {
           </div>
         </div>
         <div className="footer-bottom">
-          <p>&copy; 2024 Smart Parking. All rights reserved.</p>
+          <p>&copy; 2024 {siteName || "Parkify"}. All rights reserved.</p>
         </div>
       </footer>
     </>

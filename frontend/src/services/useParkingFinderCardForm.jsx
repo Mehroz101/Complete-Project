@@ -14,7 +14,7 @@ export const useParkingFinderCardForm = () => {
     totalHours: "",
   });
   const handleChange = (e) => {
-    const lettersRegex = /^[A-Za-z]*$/; // Only letters
+    const lettersRegex =/^[A-Za-z\s]*$/; // Only letters
     if(e.target.name == "searchInput"){
       if (lettersRegex.test(e.target.value) || e.target.value === '') {
         setFindParking((prevState) => ({

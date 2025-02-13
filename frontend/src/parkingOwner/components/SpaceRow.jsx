@@ -67,7 +67,7 @@ const SpaceRow = ({
         </td>
         <td className="title">{spaceInfo.title}</td>
         <td className="request_id_td">
-          <span className="request_id">{spaceInfo._id}</span>
+          <span className="request_id">{spaceInfo?.spaceID ? spaceInfo?.spaceID: 0 }</span>
         </td>
         <td className="total_booking">{totalBookings}</td>
         <td className="total_pending_booking">{totalPending}</td>
@@ -91,9 +91,9 @@ const SpaceRow = ({
               <i className="fa-solid fa-play"></i>
             )}
           </Link>
-          <Link title="Delete" onClick={deleteSpace}>
+          {/* <Link title="Delete" onClick={deleteSpace}>
             <i className="fa-solid fa-trash"></i>
-          </Link>
+          </Link> */}
         </td>
       </tr>
     </>

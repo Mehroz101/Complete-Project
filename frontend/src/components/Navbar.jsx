@@ -46,7 +46,7 @@ const Navbar = ({ siteName }) => {
       <div className="nav_items">
         <div className="nav_left">
           <h1>
-            <Link to="/">{siteName || "Smart Parking"}</Link>
+            <Link to="/">{siteName || "Parkify"}</Link>
           </h1>
         </div>
         <div className={navbar ? `nav_right nav_show` : `nav_right`}>

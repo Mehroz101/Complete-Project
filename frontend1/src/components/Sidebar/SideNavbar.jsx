@@ -63,7 +63,7 @@ const CustomSidebar = ({ visible, onHide }) => {
               <i className="pi pi-map"></i> Listings
             </Link>
           </li>
-          <li>
+          {/* <li>
             <Link
               to={ROUTES.NOTIFICATION}
               className="sidebar-link"
@@ -71,7 +71,7 @@ const CustomSidebar = ({ visible, onHide }) => {
             >
               <i className="pi pi-bell"></i> Notifications
             </Link>
-          </li>
+          </li> */}
           <li>
             <Link
               to={ROUTES.REVIEWS}

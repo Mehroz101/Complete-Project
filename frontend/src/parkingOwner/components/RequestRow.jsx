@@ -32,7 +32,7 @@ const RequestRow = ({
           <span className="id">{index}</span>
         </td>
         <td className="title">{reservationReq?.spaceId?.title}</td>
-        <td className="request_id">{reservationReq._id}</td>
+        <td className="request_id">{reservationReq?.reservationID}</td>
         <td className="user_name">{reservationReq.name}</td>
         <td className="user_email">{reservationReq.email}</td>
         <td className="arrival">
@@ -64,6 +64,7 @@ const RequestRow = ({
           {reservationReq.state === "completed" ||
           reservationReq.state === "cancelled" ||
           reservationReq.state === "confirmed" ||
+          reservationReq.state === "refund" ||
           reservationReq.state === "reserved" ? (
             ""
           ) : (

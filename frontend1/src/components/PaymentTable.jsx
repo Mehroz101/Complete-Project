@@ -19,7 +19,7 @@ import { notify } from "../utils/notification";
 export default function Paymenttable({ earningData }) {
   const [customers, setCustomers] = useState(null);
   const [filters, setFilters] = useState({
-    name: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
+    userId: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
     status: { value: null, matchMode: FilterMatchMode.EQUALS },
     accountName: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
     global: { value: null, matchMode: FilterMatchMode.CONTAINS },
@@ -84,11 +84,9 @@ export default function Paymenttable({ earningData }) {
     },
   });
   const accept = (rowData) => {
-    console.log(rowData);
     acceptMutation.mutate(rowData._id);
   };
   const reject = (rowData) => {
-    console.log(rowData);
     rejectMutation.mutate(rowData._id);
   };
   const statusBodyTemplate = (rowData) => {
@@ -164,8 +162,11 @@ export default function Paymenttable({ earningData }) {
         />{" "}
         <Column header="Date" field="createdAt" style={{ minWidth: "10rem" }} />
         <Column
-          field="accountName"
-          header="Name"
+          // field="userId"
+          body={(rowdata)=>{
+            return <span>{rowdata?.userId?.userID}</span>
+          }}
+          header="user Id"
           filter
           filterPlaceholder="Search by name"
           style={{ minWidth: "12rem" }}

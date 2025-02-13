@@ -46,7 +46,7 @@ const Reviews = () => {
       <div className="flex align-items-center gap-2">
         <img
           alt="Img"
-          src={`http://localhost:5000/${rowData.spaceId.images[0]}`}
+          src={`http://localhost:5000/${rowData.spaceId?.images[0]}`}
           style={{ width: "50px" }}
         />
       </div>
@@ -193,7 +193,6 @@ const Reviews = () => {
                   border: "none",
                 }}
                 onClick={() => {
-                  console.log(rowData);
                   favoriteMutation.mutate(rowData._id);
                 }}
               />
@@ -206,7 +205,6 @@ const Reviews = () => {
   useEffect(() => {
     if (allReviewsData) {
       setReviews(allReviewsData);
-      console.log(allReviewsData);
       setLoading(false);
     }
   }, [allReviewsData]); // eslint-disable-line react-hooks/exhaustive-deps
@@ -237,7 +235,7 @@ const Reviews = () => {
         />
         <Column
           header="Id"
-          field="_id"
+          field="reviewID"
           style={{ minWidth: "10rem" }}
           filter
           showFilterMenu={false}
@@ -255,7 +253,7 @@ const Reviews = () => {
           showFilterMenu={false}
           filterPlaceholder="Search by name"
           style={{ minWidth: "15rem" }}
-          body={(data) => data.spaceId.title}
+          body={(data) => data.spaceId?.title}
         />
         <Column
           header="Review"

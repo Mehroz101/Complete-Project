@@ -12,7 +12,7 @@ import { reservations } from "../FakeData/CustomerService";
 import Statistic_card from "../components/Statistic_card";
 import { Button } from "primereact/button";
 import { useDashboard } from "../context/DataContext";
-import { cencelrequest, confirmrequest } from "../services/apiService";
+import { cencelrequest, confirmrequest, refundrequest } from "../services/apiService";
 import { useMutation } from "@tanstack/react-query";
 import { notify } from "../utils/notification";
 
@@ -21,9 +21,10 @@ export default function Reservation({ hidecard = false }) {
   const [filters, setFilters] = useState({
     global: { value: null, matchMode: FilterMatchMode.CONTAINS },
     name: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
+    _id: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
     email: { value: null, matchMode: FilterMatchMode.CONTAINS },
-    spaceId: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
-    reservationId: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
+    "spaceId.spaceID": { value: null, matchMode: FilterMatchMode.STARTS_WITH },
+    reservationID: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
     state: { value: null, matchMode: FilterMatchMode.EQUALS },
   });
   const [loading, setLoading] = useState(true);
@@ -34,6 +35,7 @@ export default function Reservation({ hidecard = false }) {
     "cancelled",
     "completed",
     "reserved",
+    "refund"
   ];
   const { reservationData, getReservationData } = useDashboard();
 
@@ -64,8 +66,20 @@ export default function Reservation({ hidecard = false }) {
       console.error("Error adding user:", error.message);
     },
   });
+  const refundRequestMutation = useMutation({
+    mutationFn: refundrequest,
+    onSuccess: (data) => {
+      notify("success", data.message);
+      getReservationData();
+    },
+    onError: (error) => {
+    },
+  });
   const cencelRequest = (id) => {
     cencelRequestMutation.mutate(id);
+  };
+  const refundRequest = (id) => {
+    refundRequestMutation.mutate(id);
   };
 
   const onGlobalFilterChange = (e) => {
@@ -118,6 +132,14 @@ export default function Reservation({ hidecard = false }) {
               />
             </>
           )}
+          {rowData.state === "cancelled" && (
+            <Button
+                icon="pi pi-tag"
+                className="p-button-info"
+                tooltip="refund"
+                onClick={() => refundRequest(rowData._id)}
+              />
+          )}
         </div>
       </>
     );
@@ -133,6 +155,8 @@ export default function Reservation({ hidecard = false }) {
       case "completed":
         return "success";
       case "reserved":
+        return "warning";
+      case "refund":
         return "warning";
       default:
         return null;
@@ -224,14 +248,17 @@ export default function Reservation({ hidecard = false }) {
               style={{ minWidth: "12rem" }}
             />
             <Column
-              field="spaceId"
+              field="spaceId.spaceID"
               header="Space Id"
+              body={(rowdata)=>{
+                return <span>{rowdata?.spaceId?.spaceID}</span>
+              }}
               filter
               filterPlaceholder="Search by Space Id"
               style={{ minWidth: "12rem" }}
             />
             <Column
-              field="_id"
+              field="reservationID"
               header="Reservation Id"
               filter
               filterPlaceholder="Search by Reservation Id"

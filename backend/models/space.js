@@ -7,6 +7,8 @@ const spaceSchema = new mongoose.Schema(
       ref: "User", // Reference to the User model
       required: true,
     },
+    spaceID: { type: Number, required: true, unique: true }, // Ensure it's a number and unique
+
     title: {
       type: String,
       required: true,
@@ -64,10 +66,10 @@ const spaceSchema = new mongoose.Schema(
       type: Number,
       default: 0,
     },
-    averageRating:{
-      type:Number,
-      default:0
-    }
+    averageRating: {
+      type: Number,
+      default: 0,
+    },
   },
   {
     timestamps: true,

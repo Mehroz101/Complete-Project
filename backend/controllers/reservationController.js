@@ -17,6 +17,7 @@ const braintreeTokenController = async (req, res) => {
   try {
     gateway.clientToken.generate({}, function (err, response) {
       if (err) {
+        console.log(err)
         return res.status(500).send(err);
       } else {
         return res.status(200).send(response);
@@ -317,11 +318,14 @@ const createReservation = async (req, res) => {
         return res.status(404).json();
       }
     }
-
+// Generate the next reservationID
+const lastreservation = await reservation.findOne().sort({ reservationID: -1 });
+const nextreservationID = lastreservation ? lastreservation.reservationID + 1 : 1;
     const createReservation = new reservation({
       userId,
       spaceId,
       name,
+      reservationID:nextreservationID,
       email,
       phoneNo,
       vehicleNo,
@@ -464,9 +468,16 @@ const postReview = async (req, res) => {
       const isReservation = await reservation.findById(reservationId);
       if (isReservation) {
         if (isReservation.reviewId === null) {
+          // Generate the next reviewID
+const lastreview = await review.findOne({ reviewID: { $exists: true } }).sort({ reviewID: -1 });
+console.log("Last review:", lastreview);
+
+const nextreviewID = lastreview && lastreview.reviewID ? lastreview.spaceID + 1 : 1;
+console.log("Next Space ID:", nextreviewID);
           const Review = new review({
             userId: userId,
             spaceId: spaceId,
+            reviewID:reviewID,
             reservationId: reservationId,
             rating: rating,
             reviewMsg: msg,
@@ -540,7 +551,7 @@ const getReservationReview = async (req, res) => {
 };
 const allReservation = async (req, res) => {
   try {
-    const response = await reservation.find();
+    const response = await reservation.find().populate("spaceId","spaceID title");
     res.status(200).json(response);
   } catch (error) {
     console.log(error.message);
@@ -610,7 +621,39 @@ const confirmReservationByAdmin = async (req, res) => {
     //console.log(error.message);
     return res.status(500).json({
       success: false,
-      message: "An error occurred while cancelling the reservation",
+      message: "An error occurred while confirming the reservation",
+    });
+  }
+};
+const refundReservationByAdmin = async (req, res) => {
+  try {
+    console.log(req.body);
+
+    const { reservationId } = req.body;
+
+    if (!reservationId) {
+      return res
+        .status(400)
+        .json({ success: false, message: "Reservation ID is required" });
+    }
+    const getreservation = await reservation.findById(reservationId); // Use the correct model name
+    if (!getreservation) {
+      return res
+        .status(404)
+        .json({ success: false, message: "Reservation not found" });
+    }
+    getreservation.state = "refund";
+
+    const response = await getreservation.save();
+    console.log(response);
+    return res
+      .status(200)
+      .json({ success: true, message: "Reservation refunded successfully" });
+  } catch (error) {
+    //console.log(error.message);
+    return res.status(500).json({
+      success: false,
+      message: "An error occurred while refunded the reservation",
     });
   }
 };
@@ -632,4 +675,5 @@ module.exports = {
   allReservation,
   confirmReservationByAdmin,
   cancelReservationByAdmin,
+  refundReservationByAdmin
 };

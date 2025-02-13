@@ -139,7 +139,7 @@ const ReservationHistory = () => {
                     />
                   </td>
                   <td className="title">{item?.spaceId?.address}</td>
-                  <td className="id">{item?._id}</td>
+                  <td className="id">{item?.reservationID}</td>
                   <td className="date">
                     {item?.arrivalDate} {item?.arrivalTime}
                   </td>
@@ -153,11 +153,11 @@ const ReservationHistory = () => {
                     </span>
                   </td>
                   <td>
-                    {item.state === "confirmed" ||
-                      (item.state === "reserved" && <button>Direction</button>)}
+                    {/* {item.state === "confirmed" ||
+                      (item.state === "reserved" && <button>Direction</button>)} */}
                     {item.state === "pending" && (
                       <>
-                        <button>Direction</button>
+                        {/* <button>Direction</button> */}
                         <button
                           onClick={() => handleCancelReservation(item?._id)}
                         >
