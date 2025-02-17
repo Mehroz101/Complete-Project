@@ -38,8 +38,9 @@ const UpdateSpace = () => {
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     setRemoveImages(
-      removeImages.map((url) => url.replace(REACT_APP_API_URL, ""))
+      removeImages.map((url) => url.replace(`/`, ""))
     );
+console.log(removeImages)
     // //console.log("form submitted");
     // //console.log("removeImages in update file");
     // //console.log(removeImages);
@@ -58,8 +59,6 @@ const UpdateSpace = () => {
   const handleImageRemove = (image) => {
     image = image.replace(REACT_APP_API_URL, "");
     setRemoveImages([...removeImages, image]);
-    // //console.log("remove image in updatespace file");
-    // //console.log(removeImages);
     setExistingImages(existingImages.filter((img) => img !== image));
     // //console.log("existingImages after delete");
     // //console.log(existingImages);
@@ -77,10 +76,7 @@ const UpdateSpace = () => {
     // Spread new previews into the state without nesting arrays
     setNewImagePreviews([...newImagePreviews, ...previews]);
   };
-  useEffect(() => {
-    // //console.log("new images added in updatespace file");
-    // //console.log(images);
-  }, [handleNewImageChange]);
+
 
   return (
     <div className="create_space">

@@ -127,12 +127,12 @@ const Users = () => {
           card_icon="pi pi-user"
           card_count={users.length}
         />
-        <Button
+        {/* <Button
           label="Add New User"
           icon="pi pi-plus"
           onClick={() => setAddNewUser(true)}
           className="p-button-success align-self-start"
-        />
+        /> */}
       </div>
 
       {/* Users Table */}

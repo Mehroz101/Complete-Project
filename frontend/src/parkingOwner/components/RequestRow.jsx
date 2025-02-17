@@ -43,7 +43,7 @@ const RequestRow = ({
           {`${new Date(reservationReq.leaveDate).toLocaleDateString()} 
           ${reservationReq.leaveTime}`}
         </td>
-        <td className="price">${reservationReq.totalPrice}</td>
+        <td className="price">Rs. {reservationReq.totalPrice}</td>
         <td>
           {nonReservationReq && (
             <span className={`status cancelled`}>space deleted</span>

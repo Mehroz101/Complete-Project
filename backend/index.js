@@ -39,30 +39,19 @@ connectDB();
 app.use(checkDatabaseConnection);
 app.set("io", io);
 io.on("connection", (socket) => {
-  // console.log("connected")
-  // console.log(socket)
-
   socket.on("disconnect", () => {
-    // Clean up on disconnect
-    // console.log("disconnected");
   });
 });
-// Serve static files
 app.use(express.static(path.join(__dirname, "uploads")));
-// Expose the io instance to the whole app for use in routes/controllers
 app.post("/check-reservations", (req, res) => {
   checkReservationStatus(req, res);
 });
 
 const checkReservationStatus = async (req, res) => {
-  // console.log("io inside checkReservationStatus: ", io);  // Debugging log
-  // const io = req.app.get("io"); // Access io here
-
+  console.log("checking reservation...")
   if (!io) {
-    // console.error("Socket.io instance is not available");
     return res.status(500).json({ message: "Socket.io not initialized" });
-  } // Log here to confirm io is initialized
-  // console.log("Socket.io initialized:", io);
+  } 
 
   try {
     const now = new Date();
@@ -74,44 +63,51 @@ const checkReservationStatus = async (req, res) => {
       const arrivalTime = new Date(
         `${reservation.arrivalDate}T${reservation.arrivalTime}`
       );
-
-      // Check if the current time is past the arrival time
+     
       if (now >= arrivalTime) {
         reservation.totalBooking += 1;
-        reservation.state = "reserved"; // Update state to 'reserved'
+        reservation.state = "reserved"; 
         await reservation.save();
-        // console.log("reserved");
-        // Emit real-time updates using Socket.io (if applicable)
         if (io) {
-          // Check if io exists before emitting
           io.emit("reservationUpdated", {
             message: "Reservation status updated",
             reservation,
           });
-          // console.log("update emit");
         } else {
-          // console.error("Socket.io instance is undefined");
         }
       }
     });
+    const reservationsPending = await reservation.find({ state: "pending" });
+    reservationsPending.forEach(async (reservation) => {
+      const arrivalTime = new Date(
+        `${reservation.arrivalDate}T${reservation.arrivalTime}`
+      );
+       if (now >= arrivalTime) {
+        reservation.totalBooking += 1;
+        reservation.state = "cancelled"; 
+        await reservation.save();
+        if (io) {
+          io.emit("reservationUpdated", {
+            message: "Reservation status updated",
+            reservation,
+          });
+        } else {
+        }
+      }
+    })
     reservationsReserved.forEach(async (reservation) => {
       const leaveTime = new Date(
         `${reservation.leaveDate}T${reservation.leaveTime}`
       );
 
-      // Check if the current time is past the arrival time
       if (now >= leaveTime) {
-        reservation.state = "completed"; // Update state to 'reserved'
+        reservation.state = "completed"; 
         await reservation.save();
-        // console.log("completed");
-        // Emit real-time updates using Socket.io (if applicable)
         if (io) {
-          // Check if io exists before emitting
           io.emit("reservationUpdated", {
             message: "Reservation status updated",
             reservation,
           });
-          // console.log("update emit");
         } else {
           console.error("Socket.io instance is undefined");
         }
@@ -121,10 +117,8 @@ const checkReservationStatus = async (req, res) => {
     // console.error("Error checking reservation status:", error);
   }
 };
-// You could run this function every minute (using setInterval or a cron job)
 setInterval(checkReservationStatus, 1000); // Run every 1 minute
 
-// Apply the attachSocketIo middleware for specific routes
 app.use("/api/spaces", spaceRoutes);
 app.use("/api/reservation", reservationRoutes);
 app.use("/api/withdraw", paymentRoutes);
@@ -138,7 +132,6 @@ app.use(express.static(path.join(__dirname, "../frontend/dist")));
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "frontend", "dist", "index.html"));
 });
-// Start the server
 server.listen(PORT, (req, res) => {
   console.log(`Server is running on port ${PORT}`);
 });

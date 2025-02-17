@@ -31,7 +31,7 @@ export const useUpdateSpaceForm = () => {
           : prevState.features.filter((feature) => feature !== value),
       }));
     } else {
-      if (name === 'title' || name === "country" || name === "city" || name === "short_description" || name === "description") {
+      if ( name === "country" || name === "city" ) {
         // If the input is for email, allow special characters
         if (lettersWithSpacesRegex.test(value) || value === ' ') {
           setSpaceDetails((prevState) => ({
@@ -40,6 +40,8 @@ export const useUpdateSpaceForm = () => {
             }));
         }
       }
+
+  
 
     else if(name === 'per_hour' || name === "per_day") {
         // If the input is for email, allow special characters
@@ -65,20 +67,21 @@ export const useUpdateSpaceForm = () => {
 
   const handleSubmit = async (newFiles, removeImages, fetchedImg, spaceId) => {
     try {
-      //   //console.log("handle submit function")
-      // //console.log(" new images files");
-      // //console.log(newFiles);
-      // //console.log(" removeImg");
-      // //console.log(removeImages);
-      // //console.log(" Fetched images");
-      // //console.log(fetchedImg);
-      // //console.log("form data");
-      // //console.log(spaceDetails);
+    //     console.log("handle submit function")
+    //   console.log(" new images files");
+    //   console.log(newFiles);
+      let removeImg = removeImages.map((img)=> img.replace('/',''))
+      // console.log(" removeImg");
+      // console.log(removeImg);
+      // console.log(" Fetched images");
+      // console.log(fetchedImg);
+      // console.log("form data");
+      // console.log(spaceDetails);
       const commonElements = fetchedImg.filter((value) =>
-        removeImages.includes(value)
+      removeImg.includes(value)
       );
-      //console.log("common images to remove");
-      //console.log(commonElements);
+      // console.log("common images to remove");
+      // console.log(commonElements);
       // //console.log("features")
       // //console.log(spaceDetails.features)
       const formData = new FormData();
