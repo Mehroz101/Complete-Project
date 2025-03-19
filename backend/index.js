@@ -48,7 +48,6 @@ app.post("/check-reservations", (req, res) => {
 });
 
 const checkReservationStatus = async (req, res) => {
-  console.log("checking reservation...")
   if (!io) {
     return res.status(500).json({ message: "Socket.io not initialized" });
   } 
@@ -79,11 +78,10 @@ const checkReservationStatus = async (req, res) => {
     });
     const reservationsPending = await reservation.find({ state: "pending" });
     reservationsPending.forEach(async (reservation) => {
-      const arrivalTime = new Date(
-        `${reservation.arrivalDate}T${reservation.arrivalTime}`
+      const leaveTime = new Date(
+        `${reservation.leaveDate}T${reservation.leaveTime}`
       );
-       if (now >= arrivalTime) {
-        reservation.totalBooking += 1;
+       if (now >= leaveTime) {
         reservation.state = "cancelled"; 
         await reservation.save();
         if (io) {
