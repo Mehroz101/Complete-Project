@@ -181,6 +181,7 @@ const handleSearchChange = (e) => {
               </tr>
             </thead>
             <tbody>
+            
               {filteredData.length > 0 ? (
                 filteredData
                   ?.slice()

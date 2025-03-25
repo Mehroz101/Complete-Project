@@ -7,7 +7,7 @@ import { useParams } from "react-router-dom";
 import { calculateDistance } from "../parkingOwner/components/Functions";
 
 // Replace with your actual Mapbox access token
-const TOKEN = "pk.eyJ1IjoibWVocm96ZmFyb29xIiwiYSI6ImNtMGc2ODJqZzE0dDkyanFyamlwdmQ3eTIifQ.tKoAqHa7Fyq96aj59q4vlw";
+const TOKEN = "pk.eyJ1IjoibWVocm96ZmFyb29xIiwiYSI6ImNtOGc5OXFuNTBncnoyaXM3cnphbDJiNTcifQ.7g5xgM2lychOAxBtQru6DQ";
 
 const MapBox = ({ spaces, onShowDetail, getSpace }) => {
   // Retrieve the search input parameter from the URL
