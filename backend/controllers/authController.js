@@ -190,12 +190,12 @@ const AdminSignup = async (req, res) => {
   const { username, password, cPassword } = req.body;
   try {
     console.log(password,cPassword)
-    if (password !== cPassword) {
-      return res.status(422).json({
-        success: false,
-        message: "Passwords do not match",
-      });
-    }
+    // if (password ) {
+    //   return res.status(422).json({
+    //     success: false,
+    //     message: "Passwords do not match",
+    //   });
+    // }
     const existingAdmin = await Admin.findOne({ username });
     if (existingAdmin) {
       return res.status(409).json({

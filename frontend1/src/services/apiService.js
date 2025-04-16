@@ -102,7 +102,7 @@ export const fetchAllReservationData = async () => {
       `${API_URL}/api/reservation/allreservations`,
       config
     );
-      
+      console.log("response: ",response.data)
     return response.data || [];
   } catch (error) {
     notify("error", error.response.data.message);

@@ -15,7 +15,7 @@ export const calculateRevenue = (earningData) => {
 export const totalPendingRequests = (reservationData) => {
   if (!Array.isArray(reservationData)) {
     console.error("reservationData is not an array:", reservationData);
-    return 0; // return 0 if not an array
+    // return 0; // return 0 if not an array
   }
 
   const totalPending = reservationData.reduce((total, reservation) => {
