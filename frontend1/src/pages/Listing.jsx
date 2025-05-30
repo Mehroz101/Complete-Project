@@ -30,7 +30,7 @@ export default function BasicFilterDemo() {
   });
   const [loading, setLoading] = useState(true);
   const [globalFilterValue, setGlobalFilterValue] = useState("");
-  const [statuses] = useState(["active", "deactiveted"]);
+  const [statuses] = useState(["active", "deactivated"]);
   const { spaceData, getSpaceData } = useDashboard();
 
   const Navigate = useNavigate();
