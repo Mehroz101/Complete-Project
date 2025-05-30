@@ -11,7 +11,7 @@ const reservationSchema = new mongoose.Schema(
       ref: "Space",
       required: true,
     },
-    reservationID:{ type: Number, required: true, unique: true },
+    reservationID:{ type: Number,  unique: true },
     reviewId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Review",
