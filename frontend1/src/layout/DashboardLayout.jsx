@@ -6,9 +6,7 @@ import CustomSidebar from "../components/Sidebar/SideNavbar";
 const DashboardLayout = () => {
   const [visible, setVisible] = useState(false);
 
-  useEffect(() => {
-    console.log(visible);
-  }, [visible]);
+
 
   return (
     <>

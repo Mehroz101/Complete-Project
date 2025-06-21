@@ -22,14 +22,12 @@ export const useSigninForm = () => {
     e.preventDefault();
 
     try {
-      console.log("called 1");
       const response = await signinUser({
         email: userDetail.email,
         password: userDetail.password,
       });
 
       if (response.status === 200) {
-        console.log("called 2");
         navigate("/profile"); // Optionally, navigate to a different route
 
         notify("success", "Login successful!");
@@ -54,7 +52,7 @@ export const useSigninForm = () => {
           case 404:
             notify(
               "error",
-              `Not Found: ${response.data.message || "Resource not found."}`
+              `Not Found ${response.data.message || "" }`
             );
             break;
           case 409:

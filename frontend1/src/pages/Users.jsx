@@ -60,7 +60,6 @@ const Users = () => {
 
   useEffect(() => {
     if (userData) {
-      console.log(userData);
       setUsers(userData);
     }
   }, [userData]);
@@ -90,7 +89,6 @@ const Users = () => {
   });
   // Add user submission
   const handleAddUserSubmit = (data) => {
-    console.log(data);
     addUserMutation.mutate(data);
   };
 
@@ -102,8 +100,6 @@ const Users = () => {
   // Open edit dialog
   const handleEditUser = (user) => {
     setSelectedUser(user);
-    console.log("user")
-    console.log(user)
     setValue("fName", user.fName);
     setValue("lName", user.lName);
     setValue("Email", user.email);

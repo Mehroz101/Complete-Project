@@ -143,7 +143,6 @@ const Reviews = () => {
                     border: "none",
                   }}
                   onClick={() => {
-                    console.log(rowData);
                     rejectMutation.mutate(rowData._id);
                   }}
                 />
@@ -165,7 +164,6 @@ const Reviews = () => {
                     border: "none",
                   }}
                   onClick={() => {
-                    console.log(rowData);
                     approveMutation.mutate(rowData._id);
                   }}
                 />

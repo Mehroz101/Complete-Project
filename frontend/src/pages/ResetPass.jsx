@@ -1,8 +1,7 @@
-import React, { useState } from "react";
 import "../styles/Login.css";
 import { Link, useNavigate } from "react-router-dom";
 import { useResetForm } from "../services/useResetForm";
-import { notifyPromise } from "../services/errorHandlerService";
+import { notify } from "../services/errorHandlerService";
 import { useSetting } from "../context/WebsiteSetting";
 const ResetPass = () => {
   const navigate = useNavigate();
@@ -10,20 +9,23 @@ const ResetPass = () => {
 
   const { handleSubmit, handleChange, userDetail } = useResetForm();
   const goBack = () => {
-    navigate(-1); // This will navigate to the previous page
+    navigate(-1);
   };
   const handleFormSubmit = async (e) => {
     e.preventDefault();
+    if (userDetail.password < 6) {
+      return notify("warning", "password must be atleast 6 character");
+    }
 
-    const promise =await handleSubmit(e); // Assuming handleSubmit returns a promise
-if(userDetail.password<6){
-  return notify("warning", "password must be atleast 6 character");
-}
-// notifyPromise(promise, {
-//   pending: "Reset Password...",
-//   success: "Password Reset Successfully",
-//   error: "Failed to reset password!",
-// });
+    const promise = await handleSubmit(e); // Assuming handleSubmit returns a promise
+    if (promise.success == true) {
+      navigate("/login");
+    }
+    // notifyPromise(promise, {
+    //   pending: "Reset Password...",
+    //   success: "Password Reset Successfully",
+    //   error: "Failed to reset password!",
+    // });
   };
 
   return (

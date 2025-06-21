@@ -1,11 +1,9 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import  { useCallback, useEffect, useMemo, useState } from "react";
 import "../style/HomePage.css";
 import Statistic_card from "../components/Statistic_card";
 import ChartLine from "../components/ChartLine";
 import PieChart from "../components/PiaChart";
-import DataTableView from "../components/DataTableView";
 import { useDashboard } from "../context/DataContext";
-import { calculateRevenue } from "../utils/function";
 import Reservation from "./Reservation";
 const HomePage = () => {
   const [totalRevenue, setTotalRevenue] = useState(0);
@@ -13,7 +11,6 @@ const HomePage = () => {
   // Function to calculate revenue
   const calculateRevenue = useCallback((data) => {
     if (!data || data.length === 0) return 0;
-    console.log(data);
     return data.reduce((total, item) => {
       if (["confirmed", "completed", "reserved"].includes(item.state)) {
         return total + (parseFloat(item.totalPrice) || 0);

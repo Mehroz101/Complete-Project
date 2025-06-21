@@ -79,8 +79,6 @@
         var hash = CryptoJS.HmacSHA256(document.getElementById("hashValuesString").value, IntegritySalt);
         document.getElementsByName("pp_SecureHash")[0].value = hash + '';
 
-        console.log('string: ' + hashString);
-        console.log('hash: ' + document.getElementsByName("pp_SecureHash")[0].value);
 
         document.jsform.submit();
     }

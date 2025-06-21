@@ -12,7 +12,6 @@ export const SettingProvider = ({ children }) => {
     queryKey: ["sitename"],
     queryFn: async () => {
       const response = await axios.get(`${API_URL}/api/site/getsitsettings`);
-      console.log(response.data.data);
       return response.data.data;
     },
   });

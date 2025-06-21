@@ -33,8 +33,8 @@ export const useResetForm = () => {
 
       if (response.status === 200) {
         notify("success", "Login successful!");
+        return {success :true}
         // Optionally, navigate to a different route
-        navigate("/profile");
       } else {
         // Handle different response status codes
         switch (response.status) {
@@ -89,7 +89,7 @@ export const useResetForm = () => {
             notify(
               "error",
               `Bad Request: ${
-                error.response.data.message || "Please check your input."
+                error.data.msg || "Please check your input."
               }`
             );
             break;
@@ -105,7 +105,7 @@ export const useResetForm = () => {
             notify(
               "error",
               `Not Found: ${
-                error.response.data.message || "Resource not found."
+                error.data.msg || "Resource not found."
               }`
             );
             break;
@@ -113,7 +113,7 @@ export const useResetForm = () => {
             notify(
               "error",
               `Conflict: ${
-                error.response.data.message || "Email already exists."
+                error.data.msg || "Email already exists."
               }`
             );
             break;
@@ -121,27 +121,26 @@ export const useResetForm = () => {
             notify(
               "error",
               `Unprocessable Entity: ${
-                error.response.data.message || "Password does not match."
+                error.data.msg || "Password does not match."
               }`
             );
             break;
           default:
             notify(
               "error",
-              `Error: ${error.response.data.message || "Something went wrong."}`
+              `Error: ${error.data.msg || "Something went wrong."}`
             );
             break;
         }
       } else if (error.request) {
+        console.log(error)
         // Handle network errors
         //console.log(error);
-        notify(
-          "error",
-          `Network error: Please check your connection and try again. `
-        );
+              notify("error", `Error: ${error.data.msg}`);
+
       } else {
         // Handle other errors
-        notify("error", `Error: ${error.message}`);
+        notify("error", `Error: ${error.data.msg}`);
       }
     }
   };

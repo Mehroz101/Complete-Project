@@ -17,7 +17,7 @@ const ReviewSchema = new mongoose.Schema(
       ref: "Reservation",
       required: true,
     },
-    reviewID:{ type: Number, , unique: true },
+    reviewID:{ type: Number,  unique: true },
     rating: {
       type: Number,
       required: true,

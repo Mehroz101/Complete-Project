@@ -22,7 +22,6 @@ function Fallback({ error }) {
 
   if (match) {
     const filePath = match[1];
-    console.log("File path:", filePath); // Output: http://localhost:5173/src/App.jsx?t=1732289155098
 
     // If you want just the file name
     var fileName = filePath.substring(
@@ -30,10 +29,7 @@ function Fallback({ error }) {
       filePath.indexOf("?")
     );
     // Output: App.jsx
-  } else {
-    console.log("No file path found in the error message.");
-  }
-  console.log(error.file);
+  } 
 
   return (
     <div

@@ -47,10 +47,8 @@ const createSpace = async (req, res) => {
     }
 // Generate the next spaceID
 const lastspace = await Space.findOne({ spaceID: { $exists: true } }).sort({ spaceID: -1 });
-console.log("Last Space:", lastspace);
 
 const nextspaceID = lastspace && lastspace.spaceID ? lastspace.spaceID + 1 : 1;
-console.log("Next Space ID:", nextspaceID);
     const newSpace = new Space({
       userId,
       title,
@@ -370,7 +368,6 @@ const getallspacesbyadmin = async (req, res) => {
 const RejectReviewByAdmin = async (req, res) => {
   try {
     const { reviewId } = req.body;
-    console.log("reviewId", reviewId);
     const response = await review.findByIdAndUpdate(reviewId, {
       status: "rejected",
     });
@@ -386,7 +383,6 @@ const RejectReviewByAdmin = async (req, res) => {
 const AcceptReviewByAdmin = async (req, res) => {
   try {
     const { reviewId } = req.body;
-    console.log("reviewId", reviewId);
     const response = await review.findByIdAndUpdate(reviewId, {
       status: "approved",
     });

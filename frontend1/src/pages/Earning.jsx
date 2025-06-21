@@ -9,7 +9,6 @@ const Earning = () => {
   // Function to calculate revenue
   const calculateRevenue = useCallback((data) => {
     if (!data || data.length === 0) return 0;
-    console.log(data);
     return data.reduce((total, item) => {
       if (["confirmed", "completed", "reserved"].includes(item.state)) {
         return total + (parseFloat(item.totalPrice) || 0);

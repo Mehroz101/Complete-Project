@@ -7,7 +7,7 @@ import { useParams } from "react-router-dom";
 import { calculateDistance } from "../parkingOwner/components/Functions";
 
 // Replace with your actual Mapbox access token
-const TOKEN = "pk.eyJ1IjoibWVocm96ZmFyb29xIiwiYSI6ImNtOGc5OXFuNTBncnoyaXM3cnphbDJiNTcifQ.7g5xgM2lychOAxBtQru6DQ";
+const TOKEN = "pk.eyJ1IjoibWVocm96ZmFyb29xIiwiYSI6ImNtYXMycjB2NDBjaWYybXMybDNubzNxZzYifQ.fptZtKXP2UrPH-K4yiInGQ";
 
 const MapBox = ({ spaces, onShowDetail, getSpace }) => {
   // Retrieve the search input parameter from the URL
@@ -30,7 +30,6 @@ const MapBox = ({ spaces, onShowDetail, getSpace }) => {
   // Function to filter spaces within a 5 km radius of the provided coordinates
   const getNearbySpaces = (userLat, userLong) => {
     return spaces?.filter((space) => {
-      console.log("Space Coordinates:", space.latitude, space.longitude);
       const distance = calculateDistance(
         userLat,
         userLong,

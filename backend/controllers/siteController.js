@@ -19,7 +19,6 @@ const siteNameUpdateByAdmin = async (req, res) => {
     );
 
     if (site) {
-      console.log("Updated site:", site);
       return res.status(200).json({
         success: true,
         message: "Site name updated successfully",

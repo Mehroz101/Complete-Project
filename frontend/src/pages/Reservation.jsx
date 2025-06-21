@@ -67,7 +67,6 @@ const Reservation = () => {
 
   const getToken = async () => {
     try {
-      console.log("called");
       const { data } = await axios.get(
         `${API_URL}/api/reservation/braintree/token`
       );
@@ -78,7 +77,6 @@ const Reservation = () => {
   };
   const handlePaySubmit = async () => {
     try {
-      console.log("called");
       const token = localStorage.getItem("token");
       const config = {
         headers: {
@@ -98,7 +96,6 @@ const Reservation = () => {
         config
       );
       setLoading(false);
-      console.log(data);
     } catch (error) {
       setLoading(false);
       console.log(error.message);

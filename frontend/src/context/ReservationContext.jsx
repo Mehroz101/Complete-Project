@@ -161,9 +161,6 @@ export const ParkingOwnerProvider = ({ children }) => {
     });
 
     socket.on("spaceUpdated", (data) => {
-      console.log("updated");
-      console.log(data.userId);
-      console.log(docdedId);
       if (docdedId === data.userId) {
         addNotification(data.message);
       }

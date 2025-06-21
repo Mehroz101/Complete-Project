@@ -59,7 +59,6 @@ const MainApp = () => {
       if (searchInput) {
 
         const nearbySpaces = response?.filter((space) => {
-           console.log("space")
           const distance = calculateDistance(
             searchLocation?.latitude,
             searchLocation?.longitude,
@@ -68,7 +67,6 @@ const MainApp = () => {
           );
           return distance <= 5; // Filter spaces within 5km radius
         });
-        console.log(nearbySpaces)
         setGetAllSpaces(nearbySpaces || []);
        // Update context with filtered spaces
       } else {

@@ -30,7 +30,6 @@ const Login = () => {
     },
   });
   const onsubmit = (data) => {
-    console.log(data);
     loginMutation.mutate(data);
   };
   return (

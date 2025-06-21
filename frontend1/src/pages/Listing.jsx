@@ -18,6 +18,7 @@ import { useDashboard } from "../context/DataContext";
 import { updateStatus } from "../services/apiService";
 import { useMutation } from "@tanstack/react-query";
 import { notify } from "../utils/notification";
+import { getReservationdata } from "../../../frontend/src/services/reservationService";
 
 export default function BasicFilterDemo() {
   const [customers, setCustomers] = useState(null);
@@ -100,10 +101,9 @@ export default function BasicFilterDemo() {
   const toggleStatusMutation = useMutation({
     mutationFn: updateStatus,
     onSuccess: (data) => {
-      console.log(data);
       getSpaceData();
       notify("success", data.message);
-      getReservationData();
+      getReservationdata();
     },
     onError: (error) => {
       console.error("Error adding user:", error.message);
@@ -151,7 +151,6 @@ export default function BasicFilterDemo() {
     );
   };
   const viewData = (e) => {
-    console.log(e.data);
     Navigate(ROUTES.LISTING.LISTING_VIEW + `/${e.data.id}`);
   };
   const ratingBodyTemplate = (rowData) => {
