@@ -207,7 +207,19 @@ const CreateSpace = () => {
                 onChange={handleChange}
               />
             </div>
+
           </div>
+             <div className="input_box">
+              <label htmlFor="per_day">No of slots</label>
+              <input
+                type="number"
+                name="limit"
+                placeholder=""
+                value={spaceDetails.limit}
+                onChange={handleChange}
+              />
+            </div>
+
         </div>
         {/* Submit Button */}
         <button type="submit" className="list_space">

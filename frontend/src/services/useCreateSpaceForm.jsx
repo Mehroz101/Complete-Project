@@ -16,6 +16,7 @@ export const useCreateSpaceForm = () => {
     latitude: "",
     per_hour: "",
     per_day: "",
+    limit:0,
   });
 
   const handleChange = (e) => {
@@ -87,6 +88,7 @@ const numberletterRegex = /^[A-Za-z0-9\s]*$/
       formData.append("latitude", spaceDetails.latitude);
       formData.append("per_hour", spaceDetails.per_hour);
       formData.append("per_day", spaceDetails.per_day);
+      formData.append("limit", spaceDetails.limit);
 
       files.forEach((file, index) => {
         formData.append("files", file.file);

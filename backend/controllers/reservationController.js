@@ -1,7 +1,7 @@
 const { default: mongoose } = require("mongoose");
 const reservation = require("../models/Reservation");
 const review = require("../models/Review");
-const space = require("../models/Space");
+const space = require("../models/space");
 const emitReservationMessage = require("../utils/emitReservationMessage");
 const { ObjectId } = require("mongodb"); // or mongoose if you're using mongoose
 const order = require("../models/OrderModel");
@@ -17,7 +17,7 @@ const braintreeTokenController = async (req, res) => {
   try {
     gateway.clientToken.generate({}, function (err, response) {
       if (err) {
-        console.log(err)
+        console.log(err);
         return res.status(500).send(err);
       } else {
         return res.status(200).send(response);
@@ -90,6 +90,23 @@ const createCustomReservation = async (req, res) => {
     ) {
       return res.status(400).json();
     }
+    const findspace = await space.findById(spaceId);
+
+    if (findspace) {
+      const limit = findspace.limit;
+
+      const totalReservations = await reservation.countDocuments({
+        spaceId: spaceId,
+        state: { $in: ["pending", "reserved"] }, // ✅ Correct way to filter with OR condition
+      });
+
+      if (totalReservations >= limit) {
+        return res.status(401).json({
+          message: "Space reservation limit exceeded",
+        });
+      }
+    }
+
     const createReservation = new reservation({
       userId,
       spaceId,
@@ -311,6 +328,23 @@ const createReservation = async (req, res) => {
     ) {
       return res.status(400).json();
     }
+    const findspace = await space.findById(spaceId);
+
+    if (findspace) {
+      const limit = findspace.limit;
+
+      const totalReservations = await reservation.countDocuments({
+        spaceId: spaceId,
+        state: { $in: ["pending", "reserved"] }, // ✅ Correct way to filter with OR condition
+      });
+
+      if (totalReservations >= limit) {
+        return res.status(401).json({
+          message: "Space reservation limit exceeded",
+        });
+      }
+    }
+
     const isSpace = await space.findOne({ _id: spaceId }); // Match _id with spaceId from frontend
 
     if (isSpace) {
@@ -318,14 +352,21 @@ const createReservation = async (req, res) => {
         return res.status(404).json();
       }
     }
-// Generate the next reservationID
-const lastreservation = await reservation.findOne().sort({ reservationID: -1 });
-const nextreservationID = lastreservation ? lastreservation.reservationID + 1 : 1;
+    const lastReservation = await reservation
+      .findOne({ reservationID: { $exists: true } })
+      .sort({ reservationID: -1 })
+      .lean(); // lean() makes sure the doc is plain JS object
+
+    var nextReservationID = 1; // Default if no reservations found
+
+    if (lastReservation && !isNaN(Number(lastReservation.reservationID))) {
+      nextReservationID = Number(lastReservation.reservationID) + 1;
+    }
     const createReservation = new reservation({
       userId,
       spaceId,
       name,
-      reservationID:nextreservationID,
+      reservationID: nextReservationID,
       email,
       phoneNo,
       vehicleNo,
@@ -355,7 +396,7 @@ const nextreservationID = lastreservation ? lastreservation.reservationID + 1 : 
       response,
     });
   } catch (error) {
-    //console.log(error.message);
+    console.log(error.message);
     return res.status(500).json();
   }
 };
@@ -469,15 +510,18 @@ const postReview = async (req, res) => {
       if (isReservation) {
         if (isReservation.reviewId === null) {
           // Generate the next reviewID
-const lastreview = await review.findOne({ reviewID: { $exists: true } }).sort({ reviewID: -1 });
-console.log("Last review:", lastreview);
+          const lastreview = await review
+            .findOne({ reviewID: { $exists: true } })
+            .sort({ reviewID: -1 });
+          console.log("Last review:", lastreview);
 
-const nextreviewID = lastreview && lastreview.reviewID ? lastreview.spaceID + 1 : 1;
-console.log("Next Space ID:", nextreviewID);
+          const nextreviewID =
+            lastreview && lastreview.reviewID ? lastreview.spaceID + 1 : 1;
+          console.log("Next Space ID:", nextreviewID);
           const Review = new review({
             userId: userId,
             spaceId: spaceId,
-            reviewID:reviewID,
+            reviewID: reviewID,
             reservationId: reservationId,
             rating: rating,
             reviewMsg: msg,
@@ -551,7 +595,9 @@ const getReservationReview = async (req, res) => {
 };
 const allReservation = async (req, res) => {
   try {
-    const response = await reservation.find().populate("spaceId","spaceID title");
+    const response = await reservation
+      .find()
+      .populate("spaceId", "spaceID title");
     res.status(200).json(response);
   } catch (error) {
     console.log(error.message);
@@ -657,6 +703,37 @@ const refundReservationByAdmin = async (req, res) => {
     });
   }
 };
+const checkLimit = async (req, res) => {
+  try {
+    const { spaceId } = req.body;
+    const findspace = await space.findById(spaceId);
+
+    if (findspace) {
+      console.log(findspace);
+      const limit = findspace.limit;
+      console.log(limit);
+      const totalReservations = await reservation.countDocuments({
+        spaceId: spaceId,
+        state: { $in: ["pending", "reserved"] }, // ✅ Correct way to filter with OR condition
+      });
+
+      if (totalReservations >= limit) {
+        return res.status(401).json({
+          message: "Space reservation limit exceeded",
+        });
+      } else {
+        return res.status(201).json({
+          success: true,
+        });
+      }
+    }
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: "An error occurred while refunded the reservation",
+    });
+  }
+};
 module.exports = {
   createReservation,
   createCustomReservation,
@@ -675,5 +752,6 @@ module.exports = {
   allReservation,
   confirmReservationByAdmin,
   cancelReservationByAdmin,
-  refundReservationByAdmin
+  refundReservationByAdmin,
+  checkLimit,
 };

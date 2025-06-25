@@ -15,6 +15,7 @@ import { useDashboard } from "../context/DataContext";
 import { cencelrequest, confirmrequest, refundrequest } from "../services/apiService";
 import { useMutation } from "@tanstack/react-query";
 import { notify } from "../utils/notification";
+import { saveAs } from "file-saver";
 
 export default function Reservation({ hidecard = false }) {
   const [customers, setCustomers] = useState(null);
@@ -197,10 +198,51 @@ export default function Reservation({ hidecard = false }) {
     return options.rowIndex + 1; // Row index starts from 0, so add 1 for 1-based numbering
   };
   const header = renderHeader();
+const downloadCsv = () => {
+  if (!customers || !customers.length) return;
+
+  const headers = [
+    "Name",
+    "Email",
+    "Phone",
+    "Vehicle No",
+    "Space Title",
+    "Arrival Date",
+    "Arrival Time",
+    "Leave Date",
+    "Leave Time",
+    "Total Price",
+    "Status",
+  ];
+
+  const rows = customers.map((entry) => [
+    entry.name,
+    entry.email,
+    entry.phoneNo,
+    entry.vehicleNo,
+    entry.spaceId?.title || "N/A",
+    entry.arrivalDate,
+    entry.arrivalTime,
+    entry.leaveDate,
+    entry.leaveTime,
+    entry.totalPrice,
+    entry.state,
+  ]);
+
+  const csvContent =
+    headers.join(",") +
+    "\n" +
+    rows.map((row) => row.map((val) => `"${val}"`).join(",")).join("\n");
+
+  const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+  saveAs(blob, "reservations.csv");
+};
 
   return (
     <>
       <div className="reservation_page">
+        <div className="flex justify-content-between align-items-center">
+
         {!hidecard && (
           <div className="state_card flex mb-4 ">
             <div className="w-4">
@@ -213,6 +255,9 @@ export default function Reservation({ hidecard = false }) {
             </div>
           </div>
         )}
+        <button onClick={downloadCsv}>download csv</button>
+
+        </div>
 
         <div className="card">
           <DataTable

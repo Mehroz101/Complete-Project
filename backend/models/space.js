@@ -7,7 +7,7 @@ const spaceSchema = new mongoose.Schema(
       ref: "User", // Reference to the User model
       required: true,
     },
-    spaceID: { type: Number,  unique: true }, // Ensure it's a number and unique
+    spaceID: { type: Number, unique: true }, // Ensure it's a number and unique
 
     title: {
       type: String,
@@ -32,6 +32,10 @@ const spaceSchema = new mongoose.Schema(
     country: {
       type: String,
       required: true,
+    },
+    limit: {
+      type: Number,
+      default: 0,
     },
     features: {
       type: [String], // Array of features

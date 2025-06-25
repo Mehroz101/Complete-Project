@@ -1,7 +1,7 @@
 const Reservation = require("../models/Reservation");
 const User = require("../models/User");
 const Payment = require("../models/Payment");
-const Space = require("../models/Space");
+const Space = require("../models/space");
 const emitReservationMessage = require("../utils/emitReservationMessage");
 var braintree = require("braintree");
 // const order = require("../models/OrderModel");

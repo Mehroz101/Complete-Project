@@ -15,6 +15,7 @@ export const useUpdateSpaceForm = () => {
     longitude: "",
     latitude: "",
     per_hour: "",
+    limit: 0,
     per_day: "",
   });
 
@@ -97,6 +98,7 @@ export const useUpdateSpaceForm = () => {
       formData.append("latitude", spaceDetails.latitude);
       formData.append("per_hour", spaceDetails.per_hour);
       formData.append("per_day", spaceDetails.per_day);
+      formData.append("limit", spaceDetails.limit);
 
       newFiles.forEach((image) => formData.append("files", image));
 

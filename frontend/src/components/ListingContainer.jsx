@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import {
   calculatePrice,
   totalBooking,
 } from "../parkingOwner/components/Functions";
+import { notify, notifyPromise } from "../services/errorHandlerService";
 const REACT_APP_API_URL = import.meta.env.REACT_APP_API_URL;
+import axios from "axios";
 const ListingContainer = ({
   onShowDetail,
   slotData,
@@ -16,7 +18,7 @@ const ListingContainer = ({
   const [totalCompleted, setTotalCompleted] = useState(0); // State to hold total confirmed bookings
   const [totalReviews, setTotalReviews] = useState(0);
   const { totalHours } = useParams();
-
+  const navigate = useNavigate();
   useEffect(() => {
     if (slotData) {
       setSpace(slotData);
@@ -33,9 +35,33 @@ const ListingContainer = ({
       const matchingReviewsCount =
         reviews?.filter((review) => review?.spaceId === slotData._id)?.length ||
         0;
-        setTotalReviews(matchingReviewsCount)
+      setTotalReviews(matchingReviewsCount);
     }
   }, [space, totalHours]);
+  const checkLimitandProceed = async (id) => {
+    try {
+      const token = localStorage.getItem("token");
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`, // Add the token to the Authorization header
+        },
+      };
+      const response = await axios.post(
+        `${REACT_APP_API_URL}/api/reservation/checklimit`,
+        { spaceId: id },
+        config
+      );
+      if (response.data.success == true) {
+        navigate(`/reservation/${space._id}`);
+      } else {
+        alert("somting worng")
+     
+      }
+    } catch (error) {
+      alert(error.response.data.message)
+      
+    }
+  };
   return (
     <>
       <div className="listing">
@@ -91,9 +117,9 @@ const ListingContainer = ({
             </span>
           </div>
           <div className="listing_btn">
-            <Link to={`/reservation/${space._id}`}>
+            <button onClick={() => checkLimitandProceed(space._id)}>
               <button>Book in Rs. {price}</button>
-            </Link>
+            </button>
           </div>
         </div>
       </div>

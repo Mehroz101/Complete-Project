@@ -1,4 +1,4 @@
-const Space = require("../models/Space"); // Import your Space model
+const Space = require("../models/space"); // Import your Space model
 const fs = require("fs");
 const path = require("path");
 const review = require("../models/Review");
@@ -22,6 +22,7 @@ const createSpace = async (req, res) => {
       description,
       address,
       city,
+      limit,
       country,
       features,
       longitude,
@@ -38,6 +39,7 @@ const createSpace = async (req, res) => {
       !address ||
       !city ||
       !country ||
+      !limit ||
       !longitude ||
       !latitude ||
       !per_hour ||
@@ -57,6 +59,7 @@ const nextspaceID = lastspace && lastspace.spaceID ? lastspace.spaceID + 1 : 1;
       description,
       address,
       city,
+      limit,
       country,
       features: JSON.parse(features),
       longitude,
@@ -156,6 +159,7 @@ const updateSpaceDetails = async (req, res) => {
     description,
     address,
     city,
+    limit,
     country,
     features,
     longitude,
@@ -178,6 +182,7 @@ const updateSpaceDetails = async (req, res) => {
     space.description = description || space.description;
     space.address = address || space.address;
     space.city = city || space.city;
+    space.limit = limit || space.limit;
     space.country = country || space.country;
     space.features = features ? JSON.parse(features) : space.features;
     space.longitude = longitude || space.longitude;

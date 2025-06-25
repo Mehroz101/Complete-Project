@@ -17,7 +17,8 @@ const {
   allReservation,
   confirmReservationByAdmin,
   cancelReservationByAdmin,
-  refundReservationByAdmin
+  refundReservationByAdmin,
+  checkLimit
 } = require("../controllers/reservationController");
 const authenticateToken = require("../middleware/authMiddleware");
 
@@ -51,4 +52,5 @@ router.get("/allreservations", authenticateToken, allReservation);
 router.post("/cancelbyadmin", authenticateToken, cancelReservationByAdmin);
 router.post("/confirmbyadmin", authenticateToken, confirmReservationByAdmin);
 router.post("/refundbyadmin", authenticateToken, refundReservationByAdmin);
+router.post("/checklimit", authenticateToken, checkLimit);
 module.exports = router;
