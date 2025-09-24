@@ -18,7 +18,6 @@ const {
 } = require("../controllers/spaceController");
 const authenticateToken = require("../middleware/authMiddleware");
 
-const upload = multer({ dest: "uploads/" });
 
 // Route to create a new space with file upload
 router.post("/create", authenticateToken, uploadMiddleware, createSpace);
