@@ -5,7 +5,7 @@ const mongoose = require("mongoose");
 // Flag to track the database connection status
 let isDatabaseConnected = false;
 
-const URI = process.env.MONGO_URI
+const URI = process.env.MONGO_URI || "mongodb://mehroz:mehroz@cluster0-shard-00-00.uzb91.mongodb.net:27017,cluster0-shard-00-01.uzb91.mongodb.net:27017,cluster0-shard-00-02.uzb91.mongodb.net:27017/?ssl=true&replicaSet=atlas-jcqhhf-shard-0&authSource=admin&retryWrites=true&w=majority&appName=Cluster0"
 // Function to connect to the MongoDB database
 const connectDB = async () => {
   try {
