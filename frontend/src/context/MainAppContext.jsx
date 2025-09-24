@@ -5,7 +5,9 @@ import { getallreservation } from "../services/reservationService";
 const MainAppContextAPI = createContext();
 // Socket connection (Make sure to replace with your actual backend URL)
 const REACT_APP_API_URL = import.meta.env.REACT_APP_API_URL;
-const socket = io(REACT_APP_API_URL); // Replace with your server URL
+const socket = io(REACT_APP_API_URL,{
+    transports: ["websocket"], 
+}); // Replace with your server URL
 
 export const MainAppProvider = ({ children }) => {
   const [getAllSpaces, setGetAllSpaces] = useState([]);
