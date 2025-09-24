@@ -6,7 +6,9 @@ import { getWithdrawRequest } from "../services/withDrawService";
 import { useAuth } from "./AuthContext";
 
 const REACT_APP_API_URL = import.meta.env.REACT_APP_API_URL;
-const socket = io(REACT_APP_API_URL);
+const socket = io(REACT_APP_API_URL,{
+    transports: ["websocket"], 
+});
 
 const ParkingOwnerContext = createContext();
 
