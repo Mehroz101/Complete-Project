@@ -1,6 +1,4 @@
 const Space = require("../models/space"); // Import your Space model
-const fs = require("fs");
-const path = require("path");
 const review = require("../models/Review");
 const emitReservationMessage = require("../utils/emitReservationMessage");
 const Setting = require("../models/Settings");
