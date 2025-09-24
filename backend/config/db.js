@@ -15,6 +15,7 @@ const connectDB = async () => {
     if (connection) {
       console.log("Database connected successfully");
       isDatabaseConnected = true;
+      
     } else {
       console.log("Database connection failed");
     }
