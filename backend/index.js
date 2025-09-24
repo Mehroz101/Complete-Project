@@ -127,8 +127,9 @@ app.use("/api/admin", adminRoutes);
 app.use("/api/site", siteRoutes);
 // const HOST = '0.0.0.0'; // Change this from 'localhost' to '0.0.0.0'
 app.use(express.static(path.join(__dirname, "../frontend/dist")));
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "frontend", "dist", "index.html"));
+
+app.get("/", (req, res) => {
+  res.send("hlo g");
 });
 server.listen(PORT, (req, res) => {
   console.log(`Server is running on port ${PORT}`);
