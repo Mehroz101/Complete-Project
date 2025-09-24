@@ -4,6 +4,7 @@ const path = require("path");
 const review = require("../models/Review");
 const emitReservationMessage = require("../utils/emitReservationMessage");
 const Setting = require("../models/Settings");
+const cloudinary = require("cloudinary").v2;
 // const io = require("socket.io"); // Attach to your server
 // Get the Socket.io instance from the app
 // Create a new space
@@ -176,7 +177,7 @@ const updateSpaceDetails = async (req, res) => {
       return res.status(404).json({ message: "Space not found" });
     }
 
-    // Update space details
+    // Update basic fields
     space.title = title || space.title;
     space.short_description = short_description || space.short_description;
     space.description = description || space.description;
@@ -190,44 +191,53 @@ const updateSpaceDetails = async (req, res) => {
     space.per_hour = per_hour || space.per_hour;
     space.per_day = per_day || space.per_day;
 
-    // Handle image removal
+    // Handle image removal (Cloudinary)
     if (removeImg && removeImg.length > 0) {
-      const removedImages = space.images.filter((img) =>
-        removeImg.includes(img)
-      );
-
-      // Delete removed images from server
-      for (const img of removedImages) {
-        const imagePath = path.join(__dirname, "../uploads", img);
-
-        // Check if file exists before attempting to delete
-        if (fs.existsSync(imagePath)) {
-          fs.unlink(imagePath, (err) => {
-            if (err) {
-              console.error(`Failed to delete image ${img}:`, err);
-            } else {
-              //console.log(`Deleted image: ${img}`);
-            }
-          });
-        } else {
-          //console.log(`File ${imagePath} does not exist, skipping deletion.`);
+      for (const img of removeImg) {
+        const imageObj = space.images.find((i) => i.public_id === img);
+        if (imageObj) {
+          try {
+            await cloudinary.uploader.destroy(imageObj.public_id);
+          } catch (err) {
+            console.error(`Failed to delete image ${img}:`, err);
+          }
         }
       }
-
-      // Remove images from database
-      space.images = space.images.filter((img) => !removeImg.includes(img));
+      // Remove from DB
+      space.images = space.images.filter(
+        (img) => !removeImg.includes(img.public_id)
+      );
     }
 
-    // Handle new images upload
+    // Handle new image uploads
     if (req.files && req.files.length > 0) {
-      const newImages = req.files.map((file) => file.filename);
-      space.images = [...space.images, ...newImages];
+      const uploadedImages = [];
+
+      for (const file of req.files) {
+        const result = await new Promise((resolve, reject) => {
+          const stream = cloudinary.uploader.upload_stream(
+            { folder: "spaces" }, // optional: organize uploads
+            (error, result) => {
+              if (error) reject(error);
+              else resolve(result);
+            }
+          );
+          stream.end(file.buffer);
+        });
+
+        uploadedImages.push({
+          url: result.secure_url,
+          public_id: result.public_id,
+        });
+      }
+
+      space.images = [...space.images, ...uploadedImages];
     }
 
-    // Save the updated space in the database
+    // Save updated space
     const response = await space.save();
-    const io = req.app.get("io");
 
+    const io = req.app.get("io");
     await emitReservationMessage(
       io,
       userId,
@@ -237,12 +247,15 @@ const updateSpaceDetails = async (req, res) => {
       `Space detail updated successfully`
     );
 
-    res.status(201).json({ message: "Space updated successfully", response });
+    res
+      .status(201)
+      .json({ message: "Space updated successfully", response });
   } catch (error) {
     console.error("Error updating space details:", error.message);
     res.status(500).json({ message: "Server error" });
   }
 };
+
 const deleteSpace = async (req, res) => {
   const { spaceId } = req.params;
   try {
