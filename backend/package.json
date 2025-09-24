@@ -7,7 +7,6 @@
     "dev": "nodemon backend/index.js",
     "start": "node backend/index.js",
    "build": "npm install --legacy-peer-deps && npm install --prefix frontend && npm run build --prefix frontend"
-d"
   },
   "keywords": [],
   "author": "",
